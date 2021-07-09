@@ -34,5 +34,11 @@ export interface TagInterface {
 
 export interface PhotosResult {
   status: string;
+  pages: number;
   list: PhotoInterface[];
+}
+
+export interface TagsResult {
+  status: string;
+  list: TagInterface[];
 }

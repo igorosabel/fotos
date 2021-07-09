@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import {
   LoginData,
   LoginResult,
-  PhotosResult
+  PhotosResult,
+  TagsResult
 } from 'src/app/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
@@ -21,6 +22,10 @@ export class ApiService {
   }
 
   getPhotos(page: number): Observable<PhotosResult> {
-    return this.http.post<PhotosResult>(this.apiUrl + 'getPhotos', { page });
+    return this.http.post<PhotosResult>(this.apiUrl + 'get-photos', { page });
+  }
+
+  getTags(): Observable<TagsResult> {
+    return this.http.post<TagsResult>(this.apiUrl + 'get-tags', {});
   }
 }

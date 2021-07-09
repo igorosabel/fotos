@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Photo } from '../model/photo.model';
-import { Tag } from '../model/tag.model';
-import { PhotoInterface, TagInterface } from './../interfaces/interfaces';
+import { Photo } from 'src/app/model/photo.model';
+import { Tag } from 'src/app/model/tag.model';
+import { PhotoInterface, TagInterface } from 'src/app/interfaces/interfaces';
+import { Utils } from 'src/app/model/utils.class';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class ClassMapperService {
   getTag(t: TagInterface): Tag {
     return new Tag(
       t.id,
-      t.tag
+      Utils.urldecode(t.tag)
     );
   }
 }
