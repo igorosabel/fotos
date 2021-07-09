@@ -1,3 +1,7 @@
+export interface DataShareGlobals {
+  [key: string]: any;
+}
+
 export interface LoginData {
   name: string;
   pass: string;
