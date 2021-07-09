@@ -1,16 +1,18 @@
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { AddComponent } from 'src/app/pages/add/add.component';
+import { AdminComponent } from 'src/app/pages/admin/admin.component';
+import { DetailComponent } from 'src/app/pages/detail/detail.component';
+import { ListComponent } from 'src/app/pages/list/list.component';
+import { ApiService } from 'src/app/services/api.service';
+import { DataShareService } from 'src/app/services/data-share.service';
+import { UserService } from 'src/app/services/user.service';
+import { ClassMapperService } from './services/class-mapper.service';
 /*
  * Páginas
  */
-import { AddComponent } from './pages/add/add.component';
-import { AdminComponent } from './pages/admin/admin.component';
-import { DetailComponent } from './pages/detail/detail.component';
-import { ListComponent } from './pages/list/list.component';
-import { DataShareService } from './services/data-share.service';
-/*
- * Servicios
- */
-import { UserService } from './services/user.service';
-
 export const PAGES: any[] = [
   AddComponent,
   AdminComponent,
@@ -28,12 +30,22 @@ export const COMPONENTS: any[] = [];
  */
 export const PIPES: any[] = [];
 
+/*
+ * Servicios
+ */
 export const SERVICES: any[] = [
   UserService,
-  DataShareService
+  DataShareService,
+  ApiService,
+  ClassMapperService
 ];
 
 /*
  * Componentes Angular Material
  */
-export const MATERIAL: any[] = [];
+export const MATERIAL: any[] = [
+  MatToolbarModule,
+  MatSidenavModule,
+  MatButtonModule,
+  MatIconModule
+];

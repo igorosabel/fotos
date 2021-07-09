@@ -1,1 +1,16 @@
-<p>list works!</p>
+<mat-drawer-container [hasBackdrop]="true"
+                      class="full-height">
+  <mat-drawer-content>
+    <mat-toolbar color="primary">
+      Eneko y Unai
+      <span class="flex"></span>
+      <button mat-icon-button
+              (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+  </mat-drawer-content>
+  <mat-drawer #drawer
+              mode="push"
+              position="end">I'm a drawer</mat-drawer>
+</mat-drawer-container>
