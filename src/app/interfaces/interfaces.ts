@@ -3,7 +3,7 @@ export interface DataShareGlobals {
 }
 
 export interface LoginData {
-	name: string;
+	username: string;
 	pass: string;
 }
 

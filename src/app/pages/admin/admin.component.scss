@@ -1,0 +1,16 @@
+.form {
+	width: 30%;
+	position: fixed;
+	background-color: #fff;
+	left: 35%;
+	top: calc(50% - 150px);
+
+	.form-field {
+		width: 100%;
+	}
+
+	.action-buttons {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

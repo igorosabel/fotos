@@ -27,4 +27,8 @@ export class ListComponent implements OnInit {
 			this.tags = this.cms.getTags(result.list);
 		});
 	}
+
+	selectTag(tag: Tag): void {
+		console.log(tag);
+	}
 }
