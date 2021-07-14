@@ -8,12 +8,12 @@ import { UserService } from '../services/user.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-	constructor(public user: UserService) {}
+	constructor(public us: UserService) {}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		request = request.clone({
 			setHeaders: {
-				Authorization: this.user.token ? this.user.token : ''
+				Authorization: this.us.user.token ? this.us.user.token : ''
 			}
 		});
 		return next.handle(request).pipe(

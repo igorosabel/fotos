@@ -9,15 +9,14 @@ export interface LoginData {
 
 export interface LoginResult {
 	status: string;
-	id: number;
-	name: string;
-	token: string;
+	user: UserInterface;
 }
 
 export interface UserInterface {
 	id: number;
 	username: string;
 	name: string;
+  token: string;
 }
 
 export interface PhotoInterface {

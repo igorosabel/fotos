@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginData } from 'src/app/interfaces/interfaces';
 import { ApiService } from 'src/app/services/api.service';
+import { UserService } from 'src/app/services/user.service';
+import { ClassMapperService } from 'src/app/services/class-mapper.service';
 
 @Component({
 	selector: 'app-admin',
@@ -13,7 +16,12 @@ export class AdminComponent implements OnInit {
 		pass: ''
 	};
 
-	constructor(private api: ApiService) {}
+	constructor(
+		private api: ApiService,
+		private us: UserService,
+		private cms: ClassMapperService,
+		private router: Router
+	) {}
 
 	ngOnInit(): void {}
 
@@ -28,7 +36,15 @@ export class AdminComponent implements OnInit {
 		}
 
 		this.api.login(this.login).subscribe(result => {
-			console.log(result);
+			if (result.status === 'ok') {
+				this.us.logged = true;
+				this.us.user = this.cms.getUser(result.user);
+				this.us.saveLogin();
+				this.router.navigate(['/']);
+			}
+			else {
+				alert('Nombre de usuario o contraseña incorrectos.');
+			}
 		});
 	}
 }

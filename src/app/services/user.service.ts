@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
-import { LoginResult } from '../interfaces/interfaces';
+import { User } from 'src/app/model/user.model';
 import { DataShareService } from './data-share.service';
+import { ClassMapperService } from './class-mapper.service';
+import { UserInterface } from 'src/app/interfaces/interfaces';
 
 @Injectable()
 export class UserService {
 	logged: boolean = false;
-	id: number = -1;
-	name: string = '';
-	token: string = '';
+	user: User = new User();
 
-	constructor(private dss: DataShareService) {}
+	constructor(
+		private dss: DataShareService,
+		private cms: ClassMapperService
+	) {}
 
 	loadLogin(): void {
 		const loginObj = this.dss.getGlobal('login');
@@ -18,27 +21,18 @@ export class UserService {
 		}
 		else {
 			this.logged = true;
-			this.id = loginObj.id;
-			this.name = loginObj.name;
-			this.token = loginObj.token;
+			const obj: UserInterface = JSON.parse(loginObj);
+			this.user = this.cms.getUser(obj);
 		}
 	}
 
 	saveLogin(): void {
-		const loginObj: LoginResult = {
-			status: 'ok',
-			id: this.id,
-			name: this.name,
-			token: this.token
-		};
-		this.dss.setGlobal('login', loginObj);
+		this.dss.setGlobal('login', this.user.toInterFace());
 	}
 
 	logout(): void {
 		this.logged = false;
-		this.id = -1;
-		this.name = '';
-		this.token = '';
+		this.user = new User();
 		this.dss.removeGlobal('login');
 	}
 }

@@ -8,11 +8,11 @@ import { UserService } from 'src/app/services/user.service';
 	styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-	constructor(private user: UserService, private router: Router) {}
+	constructor(private us: UserService, private router: Router) {}
 
 	ngOnInit(): void {
-		this.user.loadLogin();
-		if (!this.user.logged) {
+		this.us.loadLogin();
+		if (!this.us.logged) {
 			this.router.navigate(['/admin']);
 		}
 	}
