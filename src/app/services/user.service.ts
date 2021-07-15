@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/model/user.model';
-import { DataShareService } from './data-share.service';
 import { ClassMapperService } from './class-mapper.service';
 import { UserInterface } from 'src/app/interfaces/interfaces';
 
@@ -9,13 +8,10 @@ export class UserService {
 	logged: boolean = false;
 	user: User = new User();
 
-	constructor(
-		private dss: DataShareService,
-		private cms: ClassMapperService
-	) {}
+	constructor(private cms: ClassMapperService) {}
 
 	loadLogin(): void {
-		const loginObj = this.dss.getGlobal('login');
+		const loginObj = localStorage.getItem('login');
 		if (loginObj === null) {
 			this.logout();
 		}
@@ -27,12 +23,12 @@ export class UserService {
 	}
 
 	saveLogin(): void {
-		this.dss.setGlobal('login', this.user.toInterFace());
+		localStorage.setItem('login', JSON.stringify(this.user.toInterFace()));
 	}
 
 	logout(): void {
 		this.logged = false;
 		this.user = new User();
-		this.dss.removeGlobal('login');
+		localStorage.removeItem('login');
 	}
 }

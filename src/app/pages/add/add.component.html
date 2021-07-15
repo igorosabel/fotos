@@ -1,1 +1,17 @@
-<p>add works!</p>
+<mat-toolbar color="primary">
+	<button mat-icon-button routerLink="/">
+		<mat-icon>arrow_back</mat-icon>
+	</button>
+	Eneko y Unai
+	<span class="flex"></span>
+	{{name}}
+</mat-toolbar>
+
+<button mat-raised-button color="primary" (click)="addNew()" class="add-button">Añadir</button>
+<input type="file" name="add-files" id="add-files" class="add-files" accept="image/*, video/*" (change)="onFileChange($event)" multiple>
+
+<mat-card class="images" *ngIf="list.length>0">
+	<mat-card-content>
+		<img *ngFor="let photo of list" [src]="photo">
+	</mat-card-content>
+</mat-card>
