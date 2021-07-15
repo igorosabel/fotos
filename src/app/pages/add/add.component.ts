@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { ApiService } from 'src/app/services/api.service';
 import { Upload } from 'src/app/model/upload.class';
 
 @Component({
@@ -14,7 +15,7 @@ export class AddComponent implements OnInit {
 	currentUploading: number = 0;
 	uploading: boolean = false;
 
-	constructor(private us: UserService, private router: Router) {}
+	constructor(private us: UserService, private as: ApiService, private router: Router) {}
 
 	ngOnInit(): void {
 		this.us.loadLogin();
@@ -56,6 +57,14 @@ export class AddComponent implements OnInit {
 	}
 	
 	uploadSelected(): void {
-		//https://stackoverflow.com/questions/47034375/angular-file-upload-progress-percentage
+		this.as.upload().subscribe(event => {
+			if (event.type === HttpEventType.UploadProgress) {
+				// This is an upload progress event. Compute and show the % done:
+				const percentDone = Math.round(100 * event.loaded / event.total);
+				console.log(`File is ${percentDone}% uploaded.`);
+			} else if (event instanceof HttpResponse) {
+				console.log('File is completely uploaded!');
+			}
+		});
 	}
 }
