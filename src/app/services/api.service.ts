@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
 	LoginData,
 	LoginResult,
 	PhotosResult,
-	TagsResult
+	TagsResult,
+	StatusResult
 } from 'src/app/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
@@ -27,5 +28,13 @@ export class ApiService {
 
 	getTags(): Observable<TagsResult> {
 		return this.http.post<TagsResult>(this.apiUrl + 'get-tags', {});
+	}
+	
+	upload(data: string): Observable<any> {
+		const req = new HttpRequest('POST', this.apiUrl + 'upload', {data}, {
+			reportProgress: true
+		});
+
+		return this.http.request<any>(req);
 	}
 }

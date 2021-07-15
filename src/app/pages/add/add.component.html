@@ -12,6 +12,16 @@
 
 <mat-card class="images" *ngIf="list.length>0">
 	<mat-card-content>
-		<img *ngFor="let photo of list" [src]="photo">
+		<div class="upload" *ngFor="let upload of list">
+			<img [src]="upload.src">
+			<div *ngIf="upload.status=='done'"class="done">
+				<mat-icon>done</mat-icon>
+			</div>
+			<div *ngIf="upload.status=='no'"class="delete">X</div>
+			<div *ngIf="upload.status=='uploading'" class="overlay"></div>
+			<div *ngIf="upload.status=='uploading'" class="uploading" [ngStyle]="{'width': upload.uploaded+'%'}"></div>
+		</div>
 	</mat-card-content>
 </mat-card>
+
+<button mat-raised-button color="primary" (click)="start()" class="add-button" [disabled]="list.length==0 || uploading">Subir fotos seleccionadas</button>

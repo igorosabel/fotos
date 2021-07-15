@@ -41,3 +41,7 @@ export interface TagsResult {
 	status: string;
 	list: TagInterface[];
 }
+
+export interface StatusResult {
+	status: string;
+}

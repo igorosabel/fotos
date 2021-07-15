@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { Upload } from 'src/app/model/upload.class';
 
 @Component({
 	selector: 'app-add',
@@ -9,7 +10,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddComponent implements OnInit {
 	name: string = '';
-	list: String[] = [];
+	list: Upload[] = [];
+	currentUploading: number = 0;
+	uploading: boolean = false;
 
 	constructor(private us: UserService, private router: Router) {}
 
@@ -28,7 +31,7 @@ export class AddComponent implements OnInit {
 		obj && obj.click();
 	}
 
-	onFileChange(event: Event) {
+	onFileChange(event: Event): void {
 		const target = (<HTMLInputElement>event.target);
 		if ( target !== null && target.files !== null && target.files.length > 0) {
 			for (let file of target.files) {
@@ -37,12 +40,22 @@ export class AddComponent implements OnInit {
 		}
 	}
 
-	readFile(file: File) {
+	readFile(file: File): void {
 		let reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onload = () => {
-			this.list.push(reader.result as string);
+			this.list.push(new Upload(reader.result as string));
 			(<HTMLInputElement>document.getElementById('add-files')).value = '';
 		};
+	}
+	
+	start(): void {
+		this.currentUploading = 0;
+		this.uploading = true;
+		this.uploadSelected();
+	}
+	
+	uploadSelected(): void {
+		//https://stackoverflow.com/questions/47034375/angular-file-upload-progress-percentage
 	}
 }
