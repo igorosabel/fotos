@@ -120,5 +120,6 @@ export class AddComponent implements OnInit {
 		this.currentUploading = 0;
 		this.uploaded = [];
 		this.tags = '';
+		this.uploading =  false;
 	}
 }

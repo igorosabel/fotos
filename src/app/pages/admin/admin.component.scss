@@ -1,8 +1,8 @@
 .form {
-	width: 30%;
+	width: 90%;
 	position: fixed;
 	background-color: #fff;
-	left: 35%;
+	left: 0;
 	top: calc(50% - 150px);
 
 	.form-field {
@@ -12,5 +12,12 @@
 	.action-buttons {
 		display: flex;
 		justify-content: flex-end;
+	}
+}
+
+@media screen and (min-width: 900px) {
+	.form {
+		width: 30%;
+		left: 35%;
 	}
 }

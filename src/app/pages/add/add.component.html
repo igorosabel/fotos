@@ -7,7 +7,7 @@
 	{{name}}
 </mat-toolbar>
 
-<button mat-raised-button color="primary" (click)="addNew()" class="add-button">Añadir</button>
+<button mat-raised-button color="primary" (click)="addNew()" class="add-button" [disabled]="uploading">Añadir</button>
 <input type="file" name="add-files" id="add-files" class="add-files" accept="image/*, video/*" (change)="onFileChange($event)" multiple>
 
 <mat-card class="images" *ngIf="list.length>0">
