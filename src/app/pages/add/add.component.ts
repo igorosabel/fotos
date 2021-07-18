@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UserService } from 'src/app/services/user.service';
 import { ApiService } from 'src/app/services/api.service';
 import { Upload } from 'src/app/model/upload.class';
@@ -49,21 +50,32 @@ export class AddComponent implements OnInit {
 			(<HTMLInputElement>document.getElementById('add-files')).value = '';
 		};
 	}
-	
+
 	start(): void {
 		this.currentUploading = 0;
 		this.uploading = true;
 		this.uploadSelected();
 	}
-	
+
+	calculateUploadWidth(current: number): number {
+		return current * 0.9;
+	}
+
 	uploadSelected(): void {
-		this.as.upload().subscribe(event => {
+		this.list[this.currentUploading].status = 'uploading';
+		this.as.upload(this.list[this.currentUploading].src).subscribe(event => {
 			if (event.type === HttpEventType.UploadProgress) {
-				// This is an upload progress event. Compute and show the % done:
-				const percentDone = Math.round(100 * event.loaded / event.total);
-				console.log(`File is ${percentDone}% uploaded.`);
+				this.list[this.currentUploading].uploaded = this.calculateUploadWidth(Math.round(100 * event.loaded / event.total));
 			} else if (event instanceof HttpResponse) {
-				console.log('File is completely uploaded!');
+				this.currentUploading++;
+				if (this.currentUploading > (this.list.length -1)) {
+					alert('Fotos subidas');
+					this.list = [];
+					this.currentUploading = 0;
+				}
+				else {
+					this.uploadSelected();
+				}
 			}
 		});
 	}
