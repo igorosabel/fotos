@@ -63,18 +63,24 @@ export class AddComponent implements OnInit {
 
 	uploadSelected(): void {
 		this.list[this.currentUploading].status = 'uploading';
-		this.as.upload(this.list[this.currentUploading].src).subscribe(event => {
+		this.as.upload(this.list[this.currentUploading].src, this.us.user.id).subscribe(event => {
 			if (event.type === HttpEventType.UploadProgress) {
 				this.list[this.currentUploading].uploaded = this.calculateUploadWidth(Math.round(100 * event.loaded / event.total));
 			} else if (event instanceof HttpResponse) {
-				this.currentUploading++;
-				if (this.currentUploading > (this.list.length -1)) {
-					alert('Fotos subidas');
-					this.list = [];
-					this.currentUploading = 0;
+				if (event.body.status === 'ok') {
+					this.currentUploading++;
+					if (this.currentUploading > (this.list.length -1)) {
+						alert('Fotos subidas');
+						this.list = [];
+						this.currentUploading = 0;
+					}
+					else {
+						this.uploadSelected();
+					}
 				}
 				else {
-					this.uploadSelected();
+					alert('¡Ocurrió un error al subir la foto!');
+					this.list[this.currentUploading].status = 'no';
 				}
 			}
 		});

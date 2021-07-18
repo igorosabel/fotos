@@ -9,7 +9,7 @@ const routes: Routes = [
 	{ path: '', component: ListComponent },
 	{ path: 'add', component: AddComponent },
 	{ path: 'admin', component: AdminComponent },
-	{ path: 'detail', component: DetailComponent },
+	{ path: 'photo/:id', component: DetailComponent },
 	{ path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 

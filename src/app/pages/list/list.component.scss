@@ -1,0 +1,14 @@
+.images {
+	.image {
+		display: inline-block;
+		width: 33vw;
+		height: 33vw;
+
+		img {
+			display: block;
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+		}
+	}
+}

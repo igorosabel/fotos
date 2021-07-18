@@ -45,3 +45,8 @@ export interface TagsResult {
 export interface StatusResult {
 	status: string;
 }
+
+export interface PhotoResult {
+  status: string;
+  photo: PhotoInterface;
+}

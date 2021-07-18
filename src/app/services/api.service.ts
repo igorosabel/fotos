@@ -6,7 +6,7 @@ import {
 	LoginResult,
 	PhotosResult,
 	TagsResult,
-	StatusResult
+	PhotoResult
 } from 'src/app/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
@@ -29,12 +29,16 @@ export class ApiService {
 	getTags(): Observable<TagsResult> {
 		return this.http.post<TagsResult>(this.apiUrl + 'get-tags', {});
 	}
-	
-	upload(data: string): Observable<any> {
-		const req = new HttpRequest('POST', this.apiUrl + 'upload', {data}, {
+
+	upload(data: string, id: number): Observable<any> {
+		const req = new HttpRequest('POST', this.apiUrl + 'upload', {data, id}, {
 			reportProgress: true
 		});
 
 		return this.http.request<any>(req);
+	}
+
+	getPhoto(id: number): Observable<PhotoResult> {
+		return this.http.post<PhotoResult>(this.apiUrl + 'get-photo', { id });
 	}
 }

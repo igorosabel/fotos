@@ -7,6 +7,18 @@
 				<mat-icon>menu</mat-icon>
 			</button>
 		</mat-toolbar>
+
+		<div class="images">
+			<div *ngFor="let photo of list" class="image">
+				<a [routerLink]="['/photo', photo.id]">
+					<picture>
+						<source media="(max-width: 767px)" [srcset]="photo.thumb">
+						<source media="(min-width: 768px)" [srcset]="photo.img">
+						<img [src]="photo.img">
+					</picture>
+				</a>
+			</div>
+		</div>
 	</mat-drawer-content>
 	<mat-drawer #drawer mode="push" position="end">
 		<mat-nav-list>
