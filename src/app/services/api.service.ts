@@ -6,6 +6,7 @@ import {
 	LoginResult,
 	PhotosResult,
 	TagsResult,
+  StatusResult,
 	PhotoResult
 } from 'src/app/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
@@ -37,6 +38,10 @@ export class ApiService {
 
 		return this.http.request<any>(req);
 	}
+
+  updateTags(list: number[], tags: string): Observable<StatusResult> {
+    return this.http.post<StatusResult>(this.apiUrl + 'update-tags', { list, tags });
+  }
 
 	getPhoto(id: number): Observable<PhotoResult> {
 		return this.http.post<PhotoResult>(this.apiUrl + 'get-photo', { id });

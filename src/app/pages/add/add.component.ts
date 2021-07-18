@@ -15,6 +15,8 @@ export class AddComponent implements OnInit {
 	list: Upload[] = [];
 	currentUploading: number = 0;
 	uploading: boolean = false;
+	uploaded: number[] = [];
+	tags: string = '';
 
 	constructor(private us: UserService, private as: ApiService, private router: Router) {}
 
@@ -51,6 +53,13 @@ export class AddComponent implements OnInit {
 		};
 	}
 
+	deletePhoto(ind: number): void {
+		const conf = confirm('¿Estás seguro de querer borrar esta foto?');
+		if (conf) {
+			this.list.splice(ind, 1);
+		}
+	}
+
 	start(): void {
 		this.currentUploading = 0;
 		this.uploading = true;
@@ -68,11 +77,14 @@ export class AddComponent implements OnInit {
 				this.list[this.currentUploading].uploaded = this.calculateUploadWidth(Math.round(100 * event.loaded / event.total));
 			} else if (event instanceof HttpResponse) {
 				if (event.body.status === 'ok') {
+					// Añado id de la foto añadida a la lista
+					this.uploaded.push(event.body.id);
+					// Marco la foto como subida
+					this.list[this.currentUploading].status = 'done';
+
 					this.currentUploading++;
 					if (this.currentUploading > (this.list.length -1)) {
-						alert('Fotos subidas');
-						this.list = [];
-						this.currentUploading = 0;
+						this.updateTags();
 					}
 					else {
 						this.uploadSelected();
@@ -84,5 +96,29 @@ export class AddComponent implements OnInit {
 				}
 			}
 		});
+	}
+
+	updateTags(): void {
+		if (this.tags !== '') {
+			this.as.updateTags(this.uploaded, this.tags).subscribe(result => {
+				if (result.status == 'ok') {
+					this.uploadDone();
+				}
+				else {
+					alert('¡Ocurrió un error al actualizar las etiquetas!');
+				}
+			});
+		}
+		else {
+			this.uploadDone();
+		}
+	}
+
+	uploadDone(): void {
+		alert('Fotos subidas');
+		this.list = [];
+		this.currentUploading = 0;
+		this.uploaded = [];
+		this.tags = '';
 	}
 }
