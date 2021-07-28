@@ -2,13 +2,13 @@
  * Páginas
  */
 import { AddComponent } from 'src/app/pages/add/add.component';
-import { AdminComponent } from 'src/app/pages/admin/admin.component';
+import { LoginComponent } from 'src/app/pages/login/login.component';
 import { DetailComponent } from 'src/app/pages/detail/detail.component';
 import { ListComponent } from 'src/app/pages/list/list.component';
 
 export const PAGES: any[] = [
 	AddComponent,
-	AdminComponent,
+	LoginComponent,
 	DetailComponent,
 	ListComponent
 ];

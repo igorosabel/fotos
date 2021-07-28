@@ -23,7 +23,7 @@ export class AddComponent implements OnInit {
 	ngOnInit(): void {
 		this.us.loadLogin();
 		if (!this.us.logged) {
-			this.router.navigate(['/admin']);
+			this.router.navigate(['/login']);
 		}
 		else {
 			this.name = this.us.user.name;

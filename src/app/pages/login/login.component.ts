@@ -6,11 +6,11 @@ import { UserService } from 'src/app/services/user.service';
 import { ClassMapperService } from 'src/app/services/class-mapper.service';
 
 @Component({
-	selector: 'app-admin',
-	templateUrl: './admin.component.html',
-	styleUrls: ['./admin.component.scss']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class LoginComponent implements OnInit {
 	login: LoginData = {
 		username: '',
 		pass: ''
