@@ -6,7 +6,8 @@ export class User {
 		public id: number = -1,
 		public username: string = '',
 		public name: string = '',
-		public token: string = ''
+		public token: string = '',
+		public isAdmin: boolean = false
 	) {}
 
 	toInterFace(): UserInterface {
@@ -14,7 +15,8 @@ export class User {
 			id: this.id,
 			username: Utils.urlencode(this.username),
 			name: Utils.urlencode(this.name),
-			token: this.token
+			token: this.token,
+			isAdmin: this.isAdmin
 		};
 	}
 }

@@ -52,7 +52,8 @@ export class ClassMapperService {
 			u.id,
 			Utils.urldecode(u.username),
 			Utils.urldecode(u.name),
-			u.token
+			u.token,
+			u.isAdmin
 		);
 	}
 }

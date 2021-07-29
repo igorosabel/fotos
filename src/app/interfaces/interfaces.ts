@@ -16,7 +16,8 @@ export interface UserInterface {
 	id: number;
 	username: string;
 	name: string;
-  token: string;
+	token: string;
+	isAdmin: boolean;
 }
 
 export interface PhotoInterface {
@@ -47,6 +48,6 @@ export interface StatusResult {
 }
 
 export interface PhotoResult {
-  status: string;
-  photo: PhotoInterface;
+	status: string;
+	photo: PhotoInterface;
 }

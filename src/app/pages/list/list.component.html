@@ -10,7 +10,7 @@
 
 		<div class="images">
 			<div *ngFor="let photo of list" class="image">
-				<a [routerLink]="['/photo', photo.id]">
+				<a (click)="selectPhoto($event, photo)">
 					<picture>
 						<source media="(max-width: 767px)" [srcset]="photo.thumb">
 						<source media="(min-width: 768px)" [srcset]="photo.img">
@@ -22,8 +22,12 @@
 	</mat-drawer-content>
 	<mat-drawer #drawer mode="push" position="end">
 		<mat-nav-list>
-			<a mat-list-item routerLink="/add">Añadir</a>
+			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
 			<a mat-list-item *ngFor="let tag of tags" (click)="selectTag(tag)">{{tag.tag}}</a>
 		</mat-nav-list>
 	</mat-drawer>
 </mat-drawer-container>
+
+<div class="photo" *ngIf="showPhoto" (click)="closePhoto()">
+	<img [src]="selectedPhoto.img">
+</div>

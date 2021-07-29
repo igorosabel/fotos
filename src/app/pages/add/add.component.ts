@@ -18,7 +18,11 @@ export class AddComponent implements OnInit {
 	uploaded: number[] = [];
 	tags: string = '';
 
-	constructor(private us: UserService, private as: ApiService, private router: Router) {}
+	constructor(
+		private us: UserService,
+		private as: ApiService,
+		private router: Router
+	) {}
 
 	ngOnInit(): void {
 		this.us.loadLogin();
