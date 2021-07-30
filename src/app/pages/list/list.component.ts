@@ -55,6 +55,18 @@ export class ListComponent implements OnInit {
 		this.showPhoto = false;
 	}
 
+	previousPhoto(ev: any): void {
+		console.log(ev);
+		console.log(typeof ev);
+		alert(typeof ev);
+	}
+
+	nextPhoto(ev: any): void {
+		console.log(ev);
+		console.log(typeof ev);
+		alert(typeof ev);
+	}
+
 	selectTag(tag: Tag): void {
 		console.log(tag);
 	}

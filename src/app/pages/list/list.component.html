@@ -1,6 +1,6 @@
 <mat-drawer-container [hasBackdrop]="true" class="full-height">
 	<mat-drawer-content>
-		<mat-toolbar color="primary">
+		<mat-toolbar color="primary" class="header-toolbar">
 			Eneko y Unai
 			<span class="flex"></span>
 			<button mat-icon-button (click)="drawer.toggle()">
@@ -19,7 +19,7 @@
 		</div>
 	</mat-drawer-content>
 	<mat-drawer #drawer mode="push" position="end">
-		<mat-nav-list>
+		<mat-nav-list class="nav-list">
 			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
 			<a mat-list-item *ngFor="let tag of tags" (click)="selectTag(tag)">{{tag.tag}}</a>
 		</mat-nav-list>
@@ -27,5 +27,5 @@
 </mat-drawer-container>
 
 <div class="photo" *ngIf="showPhoto" (click)="closePhoto()">
-	<img [src]="selectedPhoto.img">
+	<img [src]="selectedPhoto.img" (swipeleft)="previousPhoto($event)" (swiperight)="nextPhoto($event)">
 </div>
