@@ -9,14 +9,12 @@
 		</mat-toolbar>
 
 		<div class="images">
-			<div *ngFor="let photo of list" class="image">
-				<a (click)="selectPhoto($event, photo)">
-					<picture>
-						<source media="(max-width: 767px)" [srcset]="photo.thumb">
-						<source media="(min-width: 768px)" [srcset]="photo.img">
-						<img [src]="photo.img">
-					</picture>
-				</a>
+			<div *ngFor="let photo of list" class="image" (click)="selectPhoto(photo)">
+				<picture>
+					<source media="(max-width: 767px)" [srcset]="photo.thumb">
+					<source media="(min-width: 768px)" [srcset]="photo.img">
+					<img [src]="photo.img">
+				</picture>
 			</div>
 		</div>
 	</mat-drawer-content>

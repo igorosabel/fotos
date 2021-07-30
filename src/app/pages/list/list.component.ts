@@ -46,8 +46,7 @@ export class ListComponent implements OnInit {
 		}
 	}
 
-	selectPhoto(ev: MouseEvent, photo: Photo): void {
-		ev && ev.preventDefault();
+	selectPhoto(photo: Photo): void {
 		this.selectedPhoto = photo;
 		this.showPhoto = true;
 	}

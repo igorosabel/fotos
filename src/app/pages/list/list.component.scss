@@ -1,8 +1,12 @@
 .images {
+	display: grid; 
+	grid-template-columns: 1fr 1fr 1fr; 
+	grid-template-rows: 1fr 1fr 1fr; 
+	gap: 0px 0px;
+
 	.image {
 		display: inline-block;
-		width: 33vw;
-		height: 33vw;
+		cursor: pointer;
 
 		img {
 			display: block;
