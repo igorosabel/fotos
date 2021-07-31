@@ -37,3 +37,5 @@
 </mat-card>
 
 <button *ngIf="list.length>0" mat-raised-button color="primary" (click)="start()" class="add-button" [disabled]="uploading">Subir fotos seleccionadas</button>
+
+<img #img src="{{data}}" style="display: block;"/>

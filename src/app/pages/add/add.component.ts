@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UserService } from 'src/app/services/user.service';
 import { ApiService } from 'src/app/services/api.service';
 import { Upload } from 'src/app/model/upload.class';
+
+import { imageData } from './imageData';
+
+declare var EXIF: any;
 
 @Component({
 	selector: 'app-add',
@@ -17,6 +21,9 @@ export class AddComponent implements OnInit {
 	uploading: boolean = false;
 	uploaded: number[] = [];
 	tags: string = '';
+
+	@ViewChild('img', { static: true }) imgEl!: ElementRef;
+	data = imageData;
 
 	constructor(
 		private us: UserService,
@@ -52,9 +59,24 @@ export class AddComponent implements OnInit {
 		let reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onload = () => {
-			this.list.push(new Upload(reader.result as string));
+			let result = reader.result as string;
+			this.data = result;
+			this.list.push(new Upload(result));
+			let img = document.createElement('img');
+			img.src = imageData;
+			this.getExif(img);
 			(<HTMLInputElement>document.getElementById('add-files')).value = '';
 		};
+	}
+
+	getExif(img: HTMLImageElement) {
+		// https://stackoverflow.com/questions/54588349/read-image-exif-data-in-angular-6/56475586
+		let allMetaData: any;
+		console.log(img);
+		EXIF.getData(<HTMLImageElement>this.imgEl.nativeElement, function (this: any) {
+			allMetaData = EXIF.getAllTags(this);
+		});
+		console.log(allMetaData);
 	}
 
 	deletePhoto(ind: number): void {
