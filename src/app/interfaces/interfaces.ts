@@ -51,3 +51,8 @@ export interface PhotoResult {
 	status: string;
 	photo: PhotoInterface;
 }
+
+export interface UploadInterface {
+	src: string;
+	date: string;
+}
