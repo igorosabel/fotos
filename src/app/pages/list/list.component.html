@@ -21,6 +21,7 @@
 	<mat-drawer #drawer mode="push" position="end">
 		<mat-nav-list class="nav-list">
 			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
+			<a mat-list-item (click)="logout()">Salir</a>
 			<a mat-list-item *ngFor="let tag of tags" (click)="selectTag(tag)">{{tag.tag}}</a>
 		</mat-nav-list>
 	</mat-drawer>

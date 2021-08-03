@@ -70,4 +70,9 @@ export class ListComponent implements OnInit {
 	selectTag(tag: Tag): void {
 		console.log(tag);
 	}
+
+	logout(): void {
+		this.us.logout();
+		this.router.navigate(['/login']);
+	}
 }
