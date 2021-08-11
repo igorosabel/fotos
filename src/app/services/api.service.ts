@@ -6,7 +6,8 @@ import {
 	LoginResult,
 	PhotosResult,
 	TagsResult,
-  StatusResult,
+	UploadInterface,
+	StatusResult,
 	PhotoResult
 } from 'src/app/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
@@ -31,7 +32,7 @@ export class ApiService {
 		return this.http.post<TagsResult>(this.apiUrl + 'get-tags', {});
 	}
 
-	upload(data: string, id: number): Observable<any> {
+	upload(data: UploadInterface, id: number): Observable<any> {
 		const req = new HttpRequest('POST', this.apiUrl + 'upload', {data, id}, {
 			reportProgress: true
 		});

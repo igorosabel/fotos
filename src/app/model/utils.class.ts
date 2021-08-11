@@ -7,4 +7,19 @@ export class Utils {
 		if (!str) { return ''; }
 		return decodeURIComponent(str.replace(/\+/g, '%20').replace(/\%21/g, '!').replace(/\%27/g, "'").replace(/\%28/g, '(').replace(/\%29/g, ')').replace(/\%2A/g, '*').replace(/\%7E/g, '~'));
 	}
+
+	static formatZeroNumber(num: number): string {
+		return ((num < 10) ? '0' + num : num.toString());
+	}
+
+	static formatDate(date: Date): string {
+		let year = date.getFullYear();
+		let month = Utils.formatZeroNumber(date.getMonth() +1);
+		let day = Utils.formatZeroNumber(date.getDate());
+		let hours = Utils.formatZeroNumber(date.getHours());
+		let minutes = Utils.formatZeroNumber(date.getMinutes());
+		let seconds = Utils.formatZeroNumber(date.getSeconds());
+
+		return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+	}
 }

@@ -66,7 +66,7 @@ export class AddComponent implements OnInit {
 		reader.readAsDataURL(file);
 		reader.onload = () => {
 			let exif = EXIF.readFromBinaryFile(this.base64ToArrayBuffer(reader.result as string));
-			alert(JSON.stringify(exif));
+			//alert(JSON.stringify(exif));
 			let result = reader.result as string;
 			this.list.push(new Upload(
 				result,
@@ -97,7 +97,7 @@ export class AddComponent implements OnInit {
 
 	uploadSelected(): void {
 		this.list[this.currentUploading].status = 'uploading';
-		this.as.upload(this.list[this.currentUploading].src, this.us.user.id).subscribe(event => {
+		this.as.upload(this.list[this.currentUploading].toInterface(), this.us.user.id).subscribe(event => {
 			if (event.type === HttpEventType.UploadProgress) {
 				this.list[this.currentUploading].uploaded = this.calculateUploadWidth(Math.round(100 * event.loaded / event.total));
 			} else if (event instanceof HttpResponse) {
