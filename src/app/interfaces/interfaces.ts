@@ -24,6 +24,7 @@ export interface PhotoInterface {
 	id: number;
 	thumb: string;
 	img: string;
+  date: number;
 	tags: TagInterface[];
 }
 

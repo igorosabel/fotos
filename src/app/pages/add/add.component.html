@@ -15,7 +15,7 @@
 		<div class="upload" *ngFor="let upload of list; index as i">
 			<img [src]="upload.src">
 			<mat-form-field>
-				<input matInput [matDatepicker]="picker" placeholder="Foto {{ i  +1 }}" [(ngModel)]="upload.creationDate">
+				<input matInput [matDatepicker]="picker" placeholder="Foto {{ i  +1 }}" [(ngModel)]="upload.creationDate" [disabled]="uploading">
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 			</mat-form-field>

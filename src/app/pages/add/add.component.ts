@@ -73,7 +73,7 @@ export class AddComponent implements OnInit {
 				(exif.DateTimeOriginal ? exif.DateTimeOriginal : '')
 			));
 			console.log(this.list);
-			alert(JSON.stringify(this.list.map(x => x.toInterface())));
+			//alert(JSON.stringify(this.list.map(x => x.toInterface())));
 			(<HTMLInputElement>document.getElementById('add-files')).value = '';
 		};
 	}
