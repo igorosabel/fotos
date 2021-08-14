@@ -8,7 +8,8 @@ export class Upload {
 
 	constructor(
 		public src: string = '',
-		public date: string = ''
+		public date: string = '',
+		public exif: string = ''
 	) {
 		if (date !== '') {
 			let datePieces = date.split(' ');
@@ -28,7 +29,8 @@ export class Upload {
 	toInterface(): UploadInterface {
 		return {
 			src: this.src,
-			date: (this.date != '') ? Utils.formatDate(this.creationDate, true) : ''
+			date: (this.date != '') ? Utils.formatDate(this.creationDate, true) : '',
+			exif: this.exif
 		};
 	}
 }

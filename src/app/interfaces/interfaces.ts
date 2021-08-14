@@ -56,4 +56,5 @@ export interface PhotoResult {
 export interface UploadInterface {
 	src: string;
 	date: string;
+	exif: string;
 }

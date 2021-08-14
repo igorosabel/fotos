@@ -66,11 +66,13 @@ export class AddComponent implements OnInit {
 		reader.readAsDataURL(file);
 		reader.onload = () => {
 			let exif = EXIF.readFromBinaryFile(this.base64ToArrayBuffer(reader.result as string));
-			//alert(JSON.stringify(exif));
+			alert(JSON.stringify(exif));
+			console.log(exif);
 			let result = reader.result as string;
 			this.list.push(new Upload(
 				result,
-				(exif.DateTimeOriginal ? exif.DateTimeOriginal : '')
+				(exif.DateTimeOriginal ? exif.DateTimeOriginal : ''),
+				JSON.stringify(exif)
 			));
 			console.log(this.list);
 			//alert(JSON.stringify(this.list.map(x => x.toInterface())));
