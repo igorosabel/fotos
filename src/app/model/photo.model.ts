@@ -1,8 +1,9 @@
 import {
 	PhotoInterface,
 	TagInterface
-} from '../interfaces/interfaces';
-import { Tag } from './tag.model';
+} from 'src/app/interfaces/interfaces';
+import { Tag } from 'src/app/model/tag.model';
+import { Utils } from 'src/app/model/utils.class';
 
 export class Photo {
 	photoDate: Date = new Date();
@@ -15,6 +16,10 @@ export class Photo {
 		public tags: Tag[] = []
 	) {
 		this.photoDate = new Date(date * 1000);
+	}
+
+	get showDate(): string {
+		return Utils.formatDate(this.photoDate);
 	}
 
 	toInterface(): PhotoInterface {

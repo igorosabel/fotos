@@ -13,7 +13,7 @@
 
 	mat-card-content {
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr;
 		gap: 0px 0px;
 
 		.upload {
@@ -101,15 +101,19 @@
 	.images {
 		width: 60%;
 
-		.upload {
-			.delete {
-				width: 40px;
-				height: 40px;
-				font-size: 2em;
-			}
+		mat-card-content {
+			grid-template-columns: 1fr 1fr 1fr;
 
-			.uploading {
-				height: 30px;
+			.upload {
+				.delete {
+					width: 40px;
+					height: 40px;
+					font-size: 2em;
+				}
+
+				.uploading {
+					height: 30px;
+				}
 			}
 		}
 	}

@@ -12,7 +12,7 @@ export class Utils {
 		return ((num < 10) ? '0' + num : num.toString());
 	}
 
-	static formatDate(date: Date): string {
+	static formatDate(date: Date, forDB: boolean = false): string {
 		let year = date.getFullYear();
 		let month = Utils.formatZeroNumber(date.getMonth() +1);
 		let day = Utils.formatZeroNumber(date.getDate());
@@ -20,6 +20,9 @@ export class Utils {
 		let minutes = Utils.formatZeroNumber(date.getMinutes());
 		let seconds = Utils.formatZeroNumber(date.getSeconds());
 
-		return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+		if (!forDB) {
+			return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+		}
+		return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 	}
 }

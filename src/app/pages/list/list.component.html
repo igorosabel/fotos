@@ -29,4 +29,5 @@
 
 <div class="photo" *ngIf="showPhoto" (click)="closePhoto()">
 	<img [src]="selectedPhoto.img" (swipeleft)="previousPhoto($event)" (swiperight)="nextPhoto($event)">
+	<div class="photo-date">{{selectedPhoto.showDate}}</div>
 </div>

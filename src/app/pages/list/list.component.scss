@@ -41,6 +41,15 @@
 	img {
 		max-width: 100%;
 	}
+
+	.photo-date {
+		position: fixed;
+		top: 16px;
+		left: 0;
+		width: 100%;
+		text-align: center;
+		color: #fff;
+	}
 }
 
 @media screen and (min-width: 900px) {
