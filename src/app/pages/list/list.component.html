@@ -22,7 +22,7 @@
 		<mat-nav-list class="nav-list">
 			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
 			<a mat-list-item (click)="logout()">Salir</a>
-			<a mat-list-item *ngFor="let tag of tags" (click)="selectTag(tag)">{{tag.tag}}</a>
+			<a mat-list-item *ngFor="let tag of tags" href="#" (click)="selectTag(tag, $event)">{{tag.tag}}</a>
 		</mat-nav-list>
 	</mat-drawer>
 </mat-drawer-container>
@@ -30,4 +30,7 @@
 <div class="photo" *ngIf="showPhoto" (click)="closePhoto()">
 	<img [src]="selectedPhoto.img" (swipeleft)="previousPhoto($event)" (swiperight)="nextPhoto($event)">
 	<div class="photo-date">{{selectedPhoto.showDate}}</div>
+	<div class="photo-tags">
+		<a *ngFor="let tag of selectedPhoto.tags" href="#" (click)="selectTag(tag, $event)">{{tag.tag}}</a>
+	</div>
 </div>

@@ -50,6 +50,23 @@
 		text-align: center;
 		color: #fff;
 	}
+
+	.photo-tags {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+
+		a {
+			color: #000;
+
+			&:hover {
+
+			}
+		}
+	}
 }
 
 @media screen and (min-width: 900px) {

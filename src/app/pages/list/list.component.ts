@@ -67,7 +67,8 @@ export class ListComponent implements OnInit {
 		alert(typeof ev);
 	}
 
-	selectTag(tag: Tag): void {
+	selectTag(tag: Tag, ev: MouseEvent): void {
+		ev && ev.preventDefault();
 		console.log(tag);
 	}
 
