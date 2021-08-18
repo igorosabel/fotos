@@ -29,7 +29,7 @@ export class Upload {
 	toInterface(): UploadInterface {
 		return {
 			src: this.src,
-			date: (this.date != '') ? Utils.formatDate(this.creationDate, true) : '',
+			date: Utils.formatDate(this.creationDate, true),
 			exif: this.exif
 		};
 	}
