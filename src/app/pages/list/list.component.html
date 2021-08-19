@@ -3,7 +3,7 @@
 		<mat-toolbar color="primary" class="header-toolbar">
 			Eneko y Unai
 			<span class="flex"></span>
-			<button mat-icon-button (click)="drawer.toggle()">
+			<button mat-icon-button (click)="openSideNav()">
 				<mat-icon>menu</mat-icon>
 			</button>
 		</mat-toolbar>
@@ -18,11 +18,13 @@
 			</div>
 		</div>
 	</mat-drawer-content>
-	<mat-drawer #drawer mode="push" position="end">
+	<mat-drawer #drawer mode="push" position="end" [(opened)]="sideNavOpened">
 		<mat-nav-list class="nav-list">
 			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
 			<a mat-list-item (click)="logout()">Salir</a>
-			<a mat-list-item *ngFor="let tag of tags" href="#" (click)="selectTag(tag, $event)">{{tag.tag}}</a>
+			<mat-divider></mat-divider>
+			<a mat-list-item href="#" (click)="selectTag(null, $event)" [ngClass]="{'selected-tag': selectedTag.id == -1}">Todas las fotos</a>
+			<a mat-list-item *ngFor="let tag of tags" href="#" (click)="selectTag(tag, $event)" [ngClass]="{'selected-tag': selectedTag.id == tag.id}">{{tag.tag}}</a>
 		</mat-nav-list>
 	</mat-drawer>
 </mat-drawer-container>
