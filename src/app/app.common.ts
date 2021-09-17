@@ -4,11 +4,13 @@
 import { AddComponent } from 'src/app/pages/add/add.component';
 import { LoginComponent } from 'src/app/pages/login/login.component';
 import { ListComponent } from 'src/app/pages/list/list.component';
+import { UsersComponent } from 'src/app/pages/users/users.component';
 
 export const PAGES: any[] = [
 	AddComponent,
 	LoginComponent,
-	ListComponent
+	ListComponent,
+	UsersComponent
 ];
 
 /*

@@ -21,6 +21,7 @@
 	<mat-drawer #drawer mode="push" position="end" [(opened)]="sideNavOpened">
 		<mat-nav-list class="nav-list">
 			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
+			<a *ngIf="isAdmin" mat-list-item routerLink="/users">Usuarios</a>
 			<a mat-list-item (click)="logout()">Salir</a>
 			<mat-divider></mat-divider>
 			<a mat-list-item href="#" (click)="selectTag(null, $event)" [ngClass]="{'selected-tag': selectedTag.id == -1}">Todas las fotos</a>
