@@ -58,3 +58,8 @@ export interface UploadInterface {
 	date: string;
 	exif: string;
 }
+
+export interface UserResult {
+	status: string;
+	list: UserInterface[];
+}

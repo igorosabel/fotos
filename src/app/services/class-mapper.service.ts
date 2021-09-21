@@ -52,6 +52,16 @@ export class ClassMapperService {
 		);
 	}
 
+	getUsers(us: UserInterface[]): User[] {
+		const users: User[] = [];
+
+		for (let u of us) {
+			users.push(this.getUser(u));
+		}
+
+		return users;
+	}
+
 	getUser(u: UserInterface): User {
 		return new User(
 			u.id,
