@@ -1,4 +1,4 @@
-import { UserInterface } from '../interfaces/interfaces';
+import { UserInterface, UserUpdateInterface } from '../interfaces/interfaces';
 import { Utils } from './utils.class';
 
 export class User {
@@ -16,6 +16,16 @@ export class User {
 			username: Utils.urlencode(this.username),
 			name: Utils.urlencode(this.name),
 			token: this.token,
+			isAdmin: this.isAdmin
+		};
+	}
+
+	toUserInterface(): UserUpdateInterface {
+		return {
+			id: this.id,
+			username: Utils.urlencode(this.username),
+			name: Utils.urlencode(this.name),
+			pass: '',
 			isAdmin: this.isAdmin
 		};
 	}

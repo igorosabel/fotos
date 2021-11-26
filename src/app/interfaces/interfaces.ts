@@ -63,3 +63,11 @@ export interface UserResult {
 	status: string;
 	list: UserInterface[];
 }
+
+export interface UserUpdateInterface {
+	id: number;
+	username: string;
+	name: string;
+	pass: string;
+	isAdmin: boolean;
+}

@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ApiService } from 'src/app/services/api.service';
 import { ClassMapperService } from 'src/app/services/class-mapper.service';
 import { User } from 'src/app/model/user.model';
+import { UserUpdateInterface } from 'src/app/interfaces/interfaces';
 
 @Component({
 	selector: 'app-users',
@@ -13,6 +14,15 @@ import { User } from 'src/app/model/user.model';
 export class UsersComponent implements OnInit {
 	users: User[] = [];
 	displayedColumns: string[] = ['id', 'username', 'name', 'isAdmin', 'options'];
+	windowTitle: string = 'Nuevo usuario';
+	selectedUser: UserUpdateInterface = {
+		id: -1,
+		username: '',
+		name: '',
+		pass: '',
+		isAdmin: false
+	};
+	showOverlay: boolean = false;
 
 	constructor(
 		private us: UserService,
@@ -33,6 +43,18 @@ export class UsersComponent implements OnInit {
 	}
 
 	addUser(): void {
+		this.windowTitle = 'Nuevo usuario';
+		this.selectedUser = {
+			id: -1,
+			username: '',
+			name: '',
+			pass: '',
+			isAdmin: false
+		};
+		this.showOverlay = true;
+	}
 
+	closeOverlay(): void {
+		this.showOverlay = false;
 	}
 }
