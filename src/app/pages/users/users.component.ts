@@ -12,6 +12,7 @@ import { UserUpdateInterface } from 'src/app/interfaces/interfaces';
 	styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+	idUser: number = -1;
 	users: User[] = [];
 	displayedColumns: string[] = ['id', 'username', 'name', 'isAdmin', 'options'];
 	windowTitle: string = 'Nuevo usuario';
@@ -23,6 +24,7 @@ export class UsersComponent implements OnInit {
 		isAdmin: false
 	};
 	showOverlay: boolean = false;
+	savingUser: boolean = false;
 
 	constructor(
 		private us: UserService,
@@ -36,10 +38,20 @@ export class UsersComponent implements OnInit {
 		if (!this.us.logged) {
 			this.router.navigate(['/login']);
 		}
+		this.idUser = this.us.user.id;
+		this.loadUsers();
+	}
+
+	loadUsers(): void {
 		this.as.getUsers().subscribe(result => {
 			this.users = this.cms.getUsers(result.list);
-			console.log(this.users);
 		});
+	}
+
+	editUser(user: User): void {
+		this.windowTitle = 'Nuevo usuario';
+		this.selectedUser = user.toUserInterface();
+		this.showOverlay = true;
 	}
 
 	addUser(): void {
@@ -56,5 +68,29 @@ export class UsersComponent implements OnInit {
 
 	closeOverlay(): void {
 		this.showOverlay = false;
+	}
+
+	saveUser(): void {
+		this.savingUser = true;
+		this.as.saveUser(this.selectedUser).subscribe(result => {
+			this.savingUser = false;
+			if (result.status === 'ok') {
+				this.closeOverlay();
+				this.loadUsers();
+				if (this.selectedUser.id === this.idUser) {
+					this.us.user.username = this.selectedUser.username;
+					this.us.user.name = this.selectedUser.name;
+					this.us.user.isAdmin = this.selectedUser.isAdmin;
+					this.us.saveLogin();
+
+					if (!this.us.user.isAdmin) {
+						this.router.navigate(['/']);
+					}
+				}
+			}
+			else {
+				alert('¡Ocurrió un error al guardar los datos! Vuelve a intentarlo en unos minutos.');
+			}
+		});
 	}
 }

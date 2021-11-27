@@ -33,10 +33,10 @@
 	<ng-container matColumnDef="options">
 		<th class="center" mat-header-cell *matHeaderCellDef>Opciones</th>
 		<td class="center" mat-cell *matCellDef="let element">
-			<button mat-icon-button color="primary">
+			<button mat-icon-button color="primary" (click)="editUser(element)">
 				<mat-icon>mode_edit</mat-icon>
 			</button>
-			<button mat-icon-button color="primary">
+			<button mat-icon-button color="primary" [disabled]="element.id===idUser">
 				<mat-icon>delete_forever</mat-icon>
 			</button>
 		</td>
@@ -52,20 +52,27 @@
 		<mat-card-content class="form-content">
 			<mat-form-field>
 				<mat-label>Nombre de usuario</mat-label>
-				<input matInput [(ngModel)]="selectedUser.username">
+				<input matInput [(ngModel)]="selectedUser.username" [disabled]="savingUser">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Nombre</mat-label>
-				<input matInput [(ngModel)]="selectedUser.name">
+				<input matInput [(ngModel)]="selectedUser.name" [disabled]="savingUser">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Contraseña</mat-label>
-				<input matInput type="password"[(ngModel)]="selectedUser.pass">
+				<input matInput type="password"[(ngModel)]="selectedUser.pass" [disabled]="savingUser">
 			</mat-form-field>
+			<div class="form-row">
+				<label>Administrador</label>
+				<mat-slide-toggle color="primary" [(ngModel)]="selectedUser.isAdmin" [disabled]="savingUser"></mat-slide-toggle>
+			</div>
 		</mat-card-content>
 		<mat-card-actions class="actions-end">
-			<button type="button" mat-button (click)="closeOverlay()">Cancelar</button>
-			<button mat-button>Continuar</button>
+			<button mat-button (click)="closeOverlay()" [disabled]="savingUser">Cancelar</button>
+			<button mat-button (click)="saveUser()" [disabled]="savingUser">
+				<span *ngIf="!savingUser">Continuar</span>
+				<img *ngIf="savingUser" class="button-icon" src="/assets/loading.svg">
+			</button>
 		</mat-card-actions>
 	</mat-card>
 </div>

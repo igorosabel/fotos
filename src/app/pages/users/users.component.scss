@@ -23,6 +23,15 @@ table {
 		display: flex;
 		flex-direction: column;
 		padding: 16px 0;
+
+		.form-row {
+			display: flex;
+			padding: 0 4px;
+
+			label {
+				flex: 1;
+			}
+		}
 	}
 
 	.actions-end {

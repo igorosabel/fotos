@@ -9,7 +9,8 @@ import {
 	UploadInterface,
 	StatusResult,
 	PhotoResult,
-	UserResult
+	UserResult,
+	UserUpdateInterface
 } from 'src/app/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
@@ -51,5 +52,9 @@ export class ApiService {
 
 	getUsers(): Observable<UserResult> {
 		return this.http.post<UserResult>(this.apiUrl + 'get-users', {});
+	}
+
+	saveUser(user: UserUpdateInterface): Observable<StatusResult> {
+		return this.http.post<StatusResult>(this.apiUrl + 'save-user', user);
 	}
 }

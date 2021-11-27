@@ -51,6 +51,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export const MATERIAL: any[] = [
 	MatToolbarModule,
@@ -62,5 +63,6 @@ export const MATERIAL: any[] = [
 	MatFormFieldModule,
 	MatInputModule,
 	MatDatepickerModule,
-  MatTableModule
+	MatTableModule,
+	MatSlideToggleModule
 ];

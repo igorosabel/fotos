@@ -23,8 +23,8 @@ export class User {
 	toUserInterface(): UserUpdateInterface {
 		return {
 			id: this.id,
-			username: Utils.urlencode(this.username),
-			name: Utils.urlencode(this.name),
+			username: this.username,
+			name: this.name,
 			pass: '',
 			isAdmin: this.isAdmin
 		};
