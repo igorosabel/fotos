@@ -7,10 +7,10 @@ import { ListComponent } from 'src/app/pages/list/list.component';
 import { UsersComponent } from 'src/app/pages/users/users.component';
 
 export const PAGES: any[] = [
-	AddComponent,
-	LoginComponent,
-	ListComponent,
-	UsersComponent
+  AddComponent,
+  LoginComponent,
+  ListComponent,
+  UsersComponent,
 ];
 
 /*
@@ -32,10 +32,10 @@ import { UserService } from 'src/app/services/user.service';
 import { ClassMapperService } from './services/class-mapper.service';
 
 export const SERVICES: any[] = [
-	UserService,
-	DataShareService,
-	ApiService,
-	ClassMapperService
+  UserService,
+  DataShareService,
+  ApiService,
+  ClassMapperService,
 ];
 
 /*
@@ -54,15 +54,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export const MATERIAL: any[] = [
-	MatToolbarModule,
-	MatSidenavModule,
-	MatButtonModule,
-	MatIconModule,
-	MatListModule,
-	MatCardModule,
-	MatFormFieldModule,
-	MatInputModule,
-	MatDatepickerModule,
-	MatTableModule,
-	MatSlideToggleModule
+  MatToolbarModule,
+  MatSidenavModule,
+  MatButtonModule,
+  MatIconModule,
+  MatListModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatTableModule,
+  MatSlideToggleModule,
 ];

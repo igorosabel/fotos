@@ -4,15 +4,19 @@ import { Utils } from 'src/app/model/utils.class';
 
 @Injectable()
 export class EsDateAdapter extends NativeDateAdapter {
-	format(date: Date, displayFormat: Object): string {
-		let year = date.getFullYear();
-		let month = Utils.formatZeroNumber(date.getMonth() +1);
-		let day = Utils.formatZeroNumber(date.getDate());
+  /*constructor() {
+		super();
+	}*/
 
-		return `${day}/${month}/${year}`;
-	}
+  format(date: Date, displayFormat: Object): string {
+    const year: number = date.getFullYear();
+    const month: string = Utils.formatZeroNumber(date.getMonth() + 1);
+    const day: string = Utils.formatZeroNumber(date.getDate());
 
-	getFirstDayOfWeek(): number {
-		return 1;
-	}
+    return `${day}/${month}/${year}`;
+  }
+
+  getFirstDayOfWeek(): number {
+    return 1;
+  }
 }
