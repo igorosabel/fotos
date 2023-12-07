@@ -35,7 +35,7 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "./node_modules/exif-js/exif.js",
+              "./node_modules/exif-js/exif.js"
             ]
           },
           "configurations": {
@@ -107,11 +107,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
