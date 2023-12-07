@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
-	<button mat-icon-button routerLink="/">
+	<button mat-icon-button
+			routerLink="/">
 		<mat-icon>arrow_back</mat-icon>
 	</button>
 	Eneko y Unai
@@ -7,38 +8,76 @@
 	{{name}}
 </mat-toolbar>
 
-<button mat-raised-button color="primary" (click)="addNew()" class="add-button" [disabled]="uploading">Añadir</button>
-<input type="file" name="add-files" id="add-files" class="add-files" accept="image/*, video/*" (change)="onFileChange($event)" multiple>
+<button mat-raised-button
+		color="primary"
+		(click)="addNew()"
+		class="add-button"
+		[disabled]="uploading">Añadir</button>
+<input type="file"
+	   name="add-files"
+	   id="add-files"
+	   class="add-files"
+	   accept="image/*, video/*"
+	   (change)="onFileChange($event)"
+	   multiple>
 
-<mat-card class="images" *ngIf="list.length>0">
+@if (list.length>0) {
+<mat-card class="images">
 	<mat-card-content>
-		<div class="upload" *ngFor="let upload of list; index as i">
-			<img [src]="upload.src">
+		@for (upload of list; track upload.creationDate; let i = $index) {
+		<div class="upload">
+			<img [src]="upload.src"
+				 alt="">
 			<mat-form-field>
-				<input matInput [matDatepicker]="picker" placeholder="Foto {{ i  +1 }}" [(ngModel)]="upload.creationDate" [disabled]="uploading">
-				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<input matInput
+					   [matDatepicker]="picker"
+					   [placeholder]="'Foto ' + (i  +1)"
+					   [(ngModel)]="upload.creationDate"
+					   [disabled]="uploading">
+				<mat-datepicker-toggle matSuffix
+									   [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 			</mat-form-field>
-			<div *ngIf="upload.status=='done'"class="done">
+			@if (upload.status === 'done') {
+			<div class="done">
 				<mat-icon>done</mat-icon>
 			</div>
-			<div *ngIf="upload.status=='no' && !uploading"class="delete" (click)="deletePhoto(i)">X</div>
-			<div *ngIf="upload.status=='uploading'" class="overlay"></div>
-			<div *ngIf="upload.status=='uploading'" class="uploading" [ngStyle]="{'width': upload.uploaded+'%'}"></div>
+			}
+			@if (upload.status=='no' && !uploading) {
+			<div class="delete"
+				 (click)="deletePhoto(i)">X</div>
+			}
+			@if (upload.status === 'uploading') {
+			<div class="overlay"></div>
+			}
+			@if (upload.status === 'uploading') {
+			<div class="uploading"
+				 [ngStyle]="{'width': upload.uploaded+'%'}"></div>
+			}
 		</div>
+		}
 	</mat-card-content>
 </mat-card>
+}
 
-<mat-card class="tags" *ngIf="list.length>0">
+@if (list.length>0) {
+<mat-card class="tags">
 	<mat-card-header>
 		<mat-card-title>Etiquetas</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
 		<mat-form-field class="tags-field">
 			<mat-label>Etiquetas</mat-label>
-			<input matInput [(ngModel)]="tags" [disabled]="uploading">
+			<input matInput
+				   [(ngModel)]="tags"
+				   [disabled]="uploading">
 		</mat-form-field>
 	</mat-card-content>
 </mat-card>
 
-<button *ngIf="list.length>0" mat-raised-button color="primary" (click)="start()" class="add-button" [disabled]="uploading">Subir fotos seleccionadas</button>
+<button mat-raised-button
+		color="primary"
+		(click)="start()"
+		class="add-button"
+		[disabled]="uploading">Subir fotos seleccionadas</button>
+}

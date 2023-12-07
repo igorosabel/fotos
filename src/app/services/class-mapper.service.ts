@@ -1,74 +1,53 @@
 import { Injectable } from '@angular/core';
+import {
+  PhotoInterface,
+  TagInterface,
+  UserInterface,
+} from 'src/app/interfaces/interfaces';
 import { Photo } from 'src/app/model/photo.model';
 import { Tag } from 'src/app/model/tag.model';
 import { User } from 'src/app/model/user.model';
-import {
-	PhotoInterface,
-	TagInterface,
-	UserInterface
-} from 'src/app/interfaces/interfaces';
 import { Utils } from 'src/app/model/utils.class';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClassMapperService {
-	constructor() {}
+  constructor() {}
 
-	getPhotos(ps: PhotoInterface[]): Photo[] {
-		const photos: Photo[] = [];
+  getPhotos(ps: PhotoInterface[]): Photo[] {
+    return ps.map((p: PhotoInterface): Photo => {
+      return this.getPhoto(p);
+    });
+  }
 
-		for (let p of ps) {
-			photos.push(this.getPhoto(p));
-		}
+  getPhoto(p: PhotoInterface): Photo {
+    return new Photo(p.id, p.thumb, p.img, p.date, this.getTags(p.tags));
+  }
 
-		return photos;
-	}
+  getTags(ts: TagInterface[]): Tag[] {
+    return ts.map((t: TagInterface): Tag => {
+      return this.getTag(t);
+    });
+  }
 
-	getPhoto(p: PhotoInterface): Photo {
-		return new Photo(
-			p.id,
-			p.thumb,
-			p.img,
-			p.date,
-			this.getTags(p.tags)
-		);
-	}
+  getTag(t: TagInterface): Tag {
+    return new Tag(t.id, Utils.urldecode(t.tag));
+  }
 
-	getTags(ts: TagInterface[]): Tag[] {
-		const tags: Tag[] = [];
+  getUsers(us: UserInterface[]): User[] {
+    return us.map((u: UserInterface): User => {
+      return this.getUser(u);
+    });
+  }
 
-		for (let t of ts) {
-			tags.push(this.getTag(t));
-		}
-
-		return tags;
-	}
-
-	getTag(t: TagInterface): Tag {
-		return new Tag(
-			t.id,
-			Utils.urldecode(t.tag)
-		);
-	}
-
-	getUsers(us: UserInterface[]): User[] {
-		const users: User[] = [];
-
-		for (let u of us) {
-			users.push(this.getUser(u));
-		}
-
-		return users;
-	}
-
-	getUser(u: UserInterface): User {
-		return new User(
-			u.id,
-			Utils.urldecode(u.username),
-			Utils.urldecode(u.name),
-			u.token,
-			u.isAdmin
-		);
-	}
+  getUser(u: UserInterface): User {
+    return new User(
+      u.id,
+      Utils.urldecode(u.username),
+      Utils.urldecode(u.name),
+      u.token,
+      u.isAdmin
+    );
+  }
 }

@@ -1,39 +1,73 @@
-<mat-drawer-container [hasBackdrop]="true" class="full-height">
+<mat-drawer-container [hasBackdrop]="true"
+					  class="full-height">
 	<mat-drawer-content>
-		<mat-toolbar color="primary" class="header-toolbar">
+		<mat-toolbar color="primary"
+					 class="header-toolbar">
 			Eneko y Unai
 			<span class="flex"></span>
-			<button mat-icon-button (click)="openSideNav()">
+			<button mat-icon-button
+					(click)="openSideNav()">
 				<mat-icon>menu</mat-icon>
 			</button>
 		</mat-toolbar>
 
 		<div class="images">
-			<div *ngFor="let photo of list" class="image" (click)="selectPhoto(photo)">
+			@for (photo of list; track photo.id) {
+			<div class="image"
+				 (click)="selectPhoto(photo)">
 				<picture>
-					<source media="(max-width: 767px)" [srcset]="photo.thumb">
-					<source media="(min-width: 768px)" [srcset]="photo.img">
-					<img [src]="photo.img">
+					<source media="(max-width: 767px)"
+							[srcset]="photo.thumb">
+					<source media="(min-width: 768px)"
+							[srcset]="photo.img">
+					<img [src]="photo.img"
+						 alt="">
 				</picture>
 			</div>
+			}
 		</div>
 	</mat-drawer-content>
-	<mat-drawer #drawer mode="push" position="end" [(opened)]="sideNavOpened">
+	<mat-drawer #drawer
+				mode="push"
+				position="end"
+				[(opened)]="sideNavOpened">
 		<mat-nav-list class="nav-list">
-			<a *ngIf="isAdmin" mat-list-item routerLink="/add">Añadir</a>
-			<a *ngIf="isAdmin" mat-list-item routerLink="/users">Usuarios</a>
-			<a mat-list-item (click)="logout()">Salir</a>
+			@if (isAdmin) {
+			<a mat-list-item
+			   routerLink="/add">Añadir</a>
+			<a mat-list-item
+			   routerLink="/users">Usuarios</a>
+			}
+			<a mat-list-item
+			   (click)="logout()">Salir</a>
 			<mat-divider></mat-divider>
-			<a mat-list-item href="#" (click)="selectTag(null, $event)" [ngClass]="{'selected-tag': selectedTag.id == -1}">Todas las fotos</a>
-			<a mat-list-item *ngFor="let tag of tags" href="#" (click)="selectTag(tag, $event)" [ngClass]="{'selected-tag': selectedTag.id == tag.id}">{{tag.tag}}</a>
+			<a mat-list-item
+			   href="#"
+			   (click)="selectTag(null, $event)"
+			   [ngClass]="{'selected-tag': selectedTag.id === -1}">Todas las fotos</a>
+			@for (tag of tags; track tag.id) {
+			<a mat-list-item
+			   href="#"
+			   (click)="selectTag(tag, $event)"
+			   [ngClass]="{'selected-tag': selectedTag.id === tag.id}">{{tag.tag}}</a>
+			}
 		</mat-nav-list>
 	</mat-drawer>
 </mat-drawer-container>
 
-<div class="photo" *ngIf="showPhoto" (click)="closePhoto()">
-	<img [src]="selectedPhoto.img" (swipeleft)="previousPhoto($event)" (swiperight)="nextPhoto($event)">
+@if (showPhoto) {
+<div class="photo"
+	 (click)="closePhoto()">
+	<img [src]="selectedPhoto.img"
+		 (swipeleft)="previousPhoto($event)"
+		 (swiperight)="nextPhoto($event)"
+		 alt="">
 	<div class="photo-date">{{selectedPhoto.showDate}}</div>
 	<div class="photo-tags">
-		<a *ngFor="let tag of selectedPhoto.tags" href="#" (click)="selectTag(tag, $event)">{{tag.tag}}</a>
+		@for (tag of selectedPhoto.tags; track tag.id) {
+		<a href="#"
+		   (click)="selectTag(tag, $event)">{{tag.tag}}</a>
+		}
 	</div>
 </div>
+}

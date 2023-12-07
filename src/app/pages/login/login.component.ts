@@ -1,50 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { LoginData } from 'src/app/interfaces/interfaces';
 import { ApiService } from 'src/app/services/api.service';
-import { UserService } from 'src/app/services/user.service';
 import { ClassMapperService } from 'src/app/services/class-mapper.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  imports: [
+    MatToolbarModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule,
+  ],
 })
-export class LoginComponent implements OnInit {
-	login: LoginData = {
-		username: '',
-		pass: ''
-	};
+export default class LoginComponent {
+  login: LoginData = {
+    username: '',
+    pass: '',
+  };
 
-	constructor(
-		private api: ApiService,
-		private us: UserService,
-		private cms: ClassMapperService,
-		private router: Router
-	) {}
+  constructor(
+    private api: ApiService,
+    private us: UserService,
+    private cms: ClassMapperService,
+    private router: Router
+  ) {}
 
-	ngOnInit(): void {}
+  continue(): void {
+    if (this.login.username === '') {
+      alert('¡No puedes dejar el nombre de usuario en blanco!');
+      return;
+    }
+    if (this.login.pass === '') {
+      alert('¡No puedes dejar la contraseña en blanco!');
+      return;
+    }
 
-	continue(): void {
-		if (this.login.username === '') {
-			alert('¡No puedes dejar el nombre de usuario en blanco!');
-			return;
-		}
-		if (this.login.pass === '') {
-			alert('¡No puedes dejar la contraseña en blanco!');
-			return;
-		}
-
-		this.api.login(this.login).subscribe(result => {
-			if (result.status === 'ok') {
-				this.us.logged = true;
-				this.us.user = this.cms.getUser(result.user);
-				this.us.saveLogin();
-				this.router.navigate(['/']);
-			}
-			else {
-				alert('Nombre de usuario o contraseña incorrectos.');
-			}
-		});
-	}
+    this.api.login(this.login).subscribe((result) => {
+      if (result.status === 'ok') {
+        this.us.logged = true;
+        this.us.user = this.cms.getUser(result.user);
+        this.us.saveLogin();
+        this.router.navigate(['/']);
+      } else {
+        alert('Nombre de usuario o contraseña incorrectos.');
+      }
+    });
+  }
 }
