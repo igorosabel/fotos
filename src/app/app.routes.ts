@@ -1,21 +1,22 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [
+const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('src/app/pages/list/list.component'),
+    loadComponent: () => import('@pages/list/list.component'),
   },
   {
     path: 'add',
-    loadComponent: () => import('src/app/pages/add/add.component'),
+    loadComponent: () => import('@pages/add/add.component'),
   },
   {
     path: 'login',
-    loadComponent: () => import('src/app/pages/login/login.component'),
+    loadComponent: () => import('@pages/login/login.component'),
   },
   {
     path: 'users',
-    loadComponent: () => import('src/app/pages/users/users.component'),
+    loadComponent: () => import('@pages/users/users.component'),
   },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
+export default routes;

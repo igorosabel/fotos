@@ -1,14 +1,10 @@
-import { NativeDateAdapter } from '@angular/material/core';
 import { Injectable } from '@angular/core';
-import { Utils } from 'src/app/model/utils.class';
+import { NativeDateAdapter } from '@angular/material/core';
+import Utils from '@model/utils.class';
 
 @Injectable()
-export class EsDateAdapter extends NativeDateAdapter {
-  /*constructor() {
-		super();
-	}*/
-
-  format(date: Date, displayFormat: Object): string {
+export default class EsDateAdapter extends NativeDateAdapter {
+  override format(date: Date, displayFormat: Object): string {
     const year: number = date.getFullYear();
     const month: string = Utils.formatZeroNumber(date.getMonth() + 1);
     const day: string = Utils.formatZeroNumber(date.getDate());
@@ -16,7 +12,7 @@ export class EsDateAdapter extends NativeDateAdapter {
     return `${day}/${month}/${year}`;
   }
 
-  getFirstDayOfWeek(): number {
+  override getFirstDayOfWeek(): number {
     return 1;
   }
 }

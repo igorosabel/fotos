@@ -1,6 +1,6 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { environment } from '@env/environment';
 import {
   LoginData,
   LoginResult,
@@ -11,16 +11,15 @@ import {
   UploadInterface,
   UserResult,
   UserUpdateInterface,
-} from 'src/app/interfaces/interfaces';
-import { environment } from 'src/environments/environment';
+} from '@interfaces/interfaces';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export default class ApiService {
+  private http: HttpClient = inject(HttpClient);
   apiUrl: string = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
 
   login(data: LoginData): Observable<LoginResult> {
     return this.http.post<LoginResult>(this.apiUrl + 'login', data);

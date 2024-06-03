@@ -6,17 +6,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   PhotoInterface,
   PhotosResult,
   TagsResult,
-} from 'src/app/interfaces/interfaces';
-import { Photo } from 'src/app/model/photo.model';
-import { Tag } from 'src/app/model/tag.model';
-import { ApiService } from 'src/app/services/api.service';
-import { ClassMapperService } from 'src/app/services/class-mapper.service';
-import { UserService } from 'src/app/services/user.service';
+} from '@interfaces/interfaces';
+import Photo from '@model/photo.model';
+import Tag from '@model/tag.model';
+import ApiService from '@services/api.service';
+import ClassMapperService from '@services/class-mapper.service';
+import UserService from '@services/user.service';
 
 @Component({
   selector: 'app-list',
@@ -31,6 +31,7 @@ import { UserService } from 'src/app/services/user.service';
     MatDividerModule,
     MatListModule,
     CommonModule,
+    RouterLink,
   ],
 })
 export default class ListComponent implements OnInit {

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { UserInterface } from 'src/app/interfaces/interfaces';
-import { User } from 'src/app/model/user.model';
-import { ClassMapperService } from './class-mapper.service';
+import { UserInterface } from '@interfaces/interfaces';
+import User from '@model/user.model';
+import ClassMapperService from '@services/class-mapper.service';
 
 @Injectable()
-export class UserService {
+export default class UserService {
   logged: boolean = false;
   user: User = new User();
 
   constructor(private cms: ClassMapperService) {}
 
   loadLogin(): void {
-    const loginObj = localStorage.getItem('login');
+    const loginObj: string | null = localStorage.getItem('login');
     if (loginObj === null) {
       this.logout();
     } else {

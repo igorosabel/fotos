@@ -9,10 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router } from '@angular/router';
-import { Upload } from 'src/app/model/upload.class';
-import { ApiService } from 'src/app/services/api.service';
-import { UserService } from 'src/app/services/user.service';
+import { Router, RouterLink } from '@angular/router';
+import Upload from '@model/upload.class';
+import ApiService from '@services/api.service';
+import UserService from '@services/user.service';
 
 declare var EXIF: any;
 
@@ -31,6 +31,7 @@ declare var EXIF: any;
     MatDatepickerModule,
     FormsModule,
     CommonModule,
+    RouterLink,
   ],
 })
 export default class AddComponent implements OnInit {
@@ -64,8 +65,9 @@ export default class AddComponent implements OnInit {
   onFileChange(event: Event): void {
     const target = <HTMLInputElement>event.target;
     if (target !== null && target.files !== null && target.files.length > 0) {
-      for (const file of target.files) {
-        this.readFile(file);
+      const files: FileList = target.files;
+      for (let i: number = 0; i < files.length; i++) {
+        this.readFile(files[i]);
       }
     }
   }

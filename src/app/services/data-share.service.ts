@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DataShareGlobals } from '../interfaces/interfaces';
+import { DataShareGlobals } from '@interfaces/interfaces';
 
 @Injectable()
-export class DataShareService {
+export default class DataShareService {
   saveLocalStorage: boolean = true;
   globals: DataShareGlobals = {};
 

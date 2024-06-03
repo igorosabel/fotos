@@ -3,18 +3,16 @@ import {
   PhotoInterface,
   TagInterface,
   UserInterface,
-} from 'src/app/interfaces/interfaces';
-import { Photo } from 'src/app/model/photo.model';
-import { Tag } from 'src/app/model/tag.model';
-import { User } from 'src/app/model/user.model';
-import { Utils } from 'src/app/model/utils.class';
+} from '@interfaces/interfaces';
+import Photo from '@model/photo.model';
+import Tag from '@model/tag.model';
+import User from '@model/user.model';
+import Utils from '@model/utils.class';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ClassMapperService {
-  constructor() {}
-
+export default class ClassMapperService {
   getPhotos(ps: PhotoInterface[]): Photo[] {
     return ps.map((p: PhotoInterface): Photo => {
       return this.getPhoto(p);

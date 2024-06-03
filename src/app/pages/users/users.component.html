@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="header">
 	<button mat-icon-button
 			routerLink="/">
 		<mat-icon>arrow_back</mat-icon>
@@ -104,7 +104,7 @@
 			<button mat-button
 					(click)="closeOverlay()"
 					[disabled]="savingUser">Cancelar</button>
-			<button mat-button
+			<button mat-flat-button
 					(click)="saveUser()"
 					[disabled]="savingUser">
 				@if (!savingUser) {
@@ -112,7 +112,7 @@
 				}
 				@else {
 				<img class="button-icon"
-					 src="/assets/loading.svg"
+					 src="/img/loading.svg"
 					 alt="">
 				}
 			</button>

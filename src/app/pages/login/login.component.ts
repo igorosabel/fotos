@@ -6,10 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { LoginData } from 'src/app/interfaces/interfaces';
-import { ApiService } from 'src/app/services/api.service';
-import { ClassMapperService } from 'src/app/services/class-mapper.service';
-import { UserService } from 'src/app/services/user.service';
+import { LoginData } from '@interfaces/interfaces';
+import ApiService from '@services/api.service';
+import ClassMapperService from '@services/class-mapper.service';
+import UserService from '@services/user.service';
 
 @Component({
   selector: 'app-login',

@@ -5,14 +5,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router } from '@angular/router';
-import { UserUpdateInterface } from 'src/app/interfaces/interfaces';
-import { User } from 'src/app/model/user.model';
-import { ApiService } from 'src/app/services/api.service';
-import { ClassMapperService } from 'src/app/services/class-mapper.service';
-import { UserService } from 'src/app/services/user.service';
+import { Router, RouterLink } from '@angular/router';
+import { UserUpdateInterface } from '@interfaces/interfaces';
+import User from '@model/user.model';
+import ApiService from '@services/api.service';
+import ClassMapperService from '@services/class-mapper.service';
+import UserService from '@services/user.service';
 
 @Component({
   selector: 'app-users',
@@ -28,6 +29,8 @@ import { UserService } from 'src/app/services/user.service';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    RouterLink,
+    MatSlideToggle,
   ],
 })
 export default class UsersComponent implements OnInit {
