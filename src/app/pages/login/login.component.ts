@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +13,6 @@ import UserService from '@services/user.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [
@@ -26,17 +25,15 @@ import UserService from '@services/user.service';
   ],
 })
 export default class LoginComponent {
+  private as: ApiService = inject(ApiService);
+  private us: UserService = inject(UserService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+  private router: Router = inject(Router);
+
   login: LoginData = {
     username: '',
     pass: '',
   };
-
-  constructor(
-    private api: ApiService,
-    private us: UserService,
-    private cms: ClassMapperService,
-    private router: Router
-  ) {}
 
   continue(): void {
     if (this.login.username === '') {
@@ -48,7 +45,7 @@ export default class LoginComponent {
       return;
     }
 
-    this.api.login(this.login).subscribe((result) => {
+    this.as.login(this.login).subscribe((result) => {
       if (result.status === 'ok') {
         this.us.logged = true;
         this.us.user = this.cms.getUser(result.user);

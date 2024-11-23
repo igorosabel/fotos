@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +18,6 @@ declare var EXIF: any;
 
 @Component({
   selector: 'app-add',
-  standalone: true,
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
   imports: [
@@ -35,18 +34,16 @@ declare var EXIF: any;
   ],
 })
 export default class AddComponent implements OnInit {
+  private us: UserService = inject(UserService);
+  private as: ApiService = inject(ApiService);
+  private router: Router = inject(Router);
+
   name: string = '';
   list: Upload[] = [];
   currentUploading: number = 0;
   uploading: boolean = false;
   uploaded: number[] = [];
   tags: string = '';
-
-  constructor(
-    private us: UserService,
-    private as: ApiService,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.us.loadLogin();

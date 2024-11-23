@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +17,6 @@ import UserService from '@services/user.service';
 
 @Component({
   selector: 'app-users',
-  standalone: true,
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   imports: [
@@ -34,6 +33,11 @@ import UserService from '@services/user.service';
   ],
 })
 export default class UsersComponent implements OnInit {
+  private as: ApiService = inject(ApiService);
+  private us: UserService = inject(UserService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+  private router: Router = inject(Router);
+
   idUser: number = -1;
   users: User[] = [];
   displayedColumns: string[] = ['id', 'username', 'name', 'isAdmin', 'options'];
@@ -47,13 +51,6 @@ export default class UsersComponent implements OnInit {
   };
   showOverlay: boolean = false;
   savingUser: boolean = false;
-
-  constructor(
-    private us: UserService,
-    private as: ApiService,
-    private cms: ClassMapperService,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.us.loadLogin();

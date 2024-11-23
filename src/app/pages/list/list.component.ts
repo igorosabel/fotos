@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,6 @@ import UserService from '@services/user.service';
 
 @Component({
   selector: 'app-list',
-  standalone: true,
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   imports: [
@@ -35,6 +34,11 @@ import UserService from '@services/user.service';
   ],
 })
 export default class ListComponent implements OnInit {
+  private us: UserService = inject(UserService);
+  private as: ApiService = inject(ApiService);
+  private cms: ClassMapperService = inject(ClassMapperService);
+  private router: Router = inject(Router);
+
   sideNavOpened: boolean = false;
   isAdmin: boolean = false;
   currentPage: number = 1;
@@ -45,13 +49,6 @@ export default class ListComponent implements OnInit {
   selectedTag: Tag = new Tag();
   showPhoto: boolean = false;
   selectedPhoto: Photo = new Photo();
-
-  constructor(
-    private us: UserService,
-    private as: ApiService,
-    private cms: ClassMapperService,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.us.loadLogin();
