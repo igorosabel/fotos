@@ -36,7 +36,8 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": ["./node_modules/exif-js/exif.js"]
+            "scripts": ["./node_modules/exif-js/exif.js"],
+            "allowedCommonJsDependencies": ["@osumi/tools"]
           },
           "configurations": {
             "production": {
