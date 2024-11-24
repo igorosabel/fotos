@@ -1,6 +1,6 @@
 import { PhotoInterface, TagInterface } from '@interfaces/interfaces';
 import Tag from '@model/tag.model';
-import Utils from '@model/utils.class';
+import { getDate } from '@osumi/tools';
 
 export default class Photo {
   photoDate: Date = new Date();
@@ -16,7 +16,7 @@ export default class Photo {
   }
 
   get showDate(): string {
-    return Utils.formatDate(this.photoDate);
+    return getDate({ date: this.photoDate, withSeconds: true });
   }
 
   toInterface(): PhotoInterface {

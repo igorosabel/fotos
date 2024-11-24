@@ -7,7 +7,7 @@ import {
 import Photo from '@model/photo.model';
 import Tag from '@model/tag.model';
 import User from '@model/user.model';
-import Utils from '@model/utils.class';
+import { urldecode } from '@osumi/tools';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export default class ClassMapperService {
   }
 
   getTag(t: TagInterface): Tag {
-    return new Tag(t.id, Utils.urldecode(t.tag));
+    return new Tag(t.id, urldecode(t.tag));
   }
 
   getUsers(us: UserInterface[]): User[] {
@@ -42,8 +42,8 @@ export default class ClassMapperService {
   getUser(u: UserInterface): User {
     return new User(
       u.id,
-      Utils.urldecode(u.username),
-      Utils.urldecode(u.name),
+      urldecode(u.username),
+      urldecode(u.name),
       u.token,
       u.isAdmin
     );

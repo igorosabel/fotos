@@ -1,5 +1,5 @@
 import { UploadInterface } from '@interfaces/interfaces';
-import Utils from '@model/utils.class';
+import { getDate } from '@osumi/tools';
 
 export default class Upload {
   status: string = 'no';
@@ -29,7 +29,12 @@ export default class Upload {
   toInterface(): UploadInterface {
     return {
       src: this.src,
-      date: Utils.formatDate(this.creationDate, true),
+      date: getDate({
+        date: this.creationDate,
+        separator: '-',
+        withSeconds: true,
+        pattern: 'ymdhis',
+      }),
       exif: this.exif,
     };
   }
