@@ -43,12 +43,12 @@
 			<a mat-list-item
 			   href="#"
 			   (click)="selectTag(null, $event)"
-			   [ngClass]="{'selected-tag': selectedTag.id === -1}">Todas las fotos</a>
+			   [class]="{'selected-tag': selectedTag.id === -1}">Todas las fotos</a>
 			@for (tag of tags; track tag.id) {
 			<a mat-list-item
 			   href="#"
 			   (click)="selectTag(tag, $event)"
-			   [ngClass]="{'selected-tag': selectedTag.id === tag.id}">{{tag.tag}}</a>
+			   [class]="{'selected-tag': selectedTag.id === tag.id}">{{tag.tag}}</a>
 			}
 		</mat-nav-list>
 	</mat-drawer>
