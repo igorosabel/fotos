@@ -20,17 +20,14 @@ export default class Photo {
   }
 
   toInterface(): PhotoInterface {
-    const tags: TagInterface[] = [];
-    for (let t of this.tags) {
-      tags.push(t.toInterface());
-    }
-
     return {
       id: this.id,
       thumb: this.thumb,
       img: this.img,
       date: this.date,
-      tags: tags,
+      tags: this.tags.map((t: Tag): TagInterface => {
+        return t.toInterface();
+      }),
     };
   }
 }

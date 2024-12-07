@@ -55,12 +55,14 @@ export default class AddComponent implements OnInit {
   }
 
   addNew(): void {
-    const obj = document.getElementById('add-files');
-    obj && obj.click();
+    const obj: HTMLElement | null = document.getElementById('add-files');
+    if (obj) {
+      obj.click();
+    }
   }
 
   onFileChange(event: Event): void {
-    const target = <HTMLInputElement>event.target;
+    const target = event.target as HTMLInputElement;
     if (target !== null && target.files !== null && target.files.length > 0) {
       const files: FileList = target.files;
       for (let i: number = 0; i < files.length; i++) {
@@ -99,7 +101,7 @@ export default class AddComponent implements OnInit {
       );
       //console.log(this.list);
       //alert(JSON.stringify(this.list.map(x => x.toInterface())));
-      (<HTMLInputElement>document.getElementById('add-files')).value = '';
+      (document.getElementById('add-files') as HTMLInputElement).value = '';
     };
   }
 

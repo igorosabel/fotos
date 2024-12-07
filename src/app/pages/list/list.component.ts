@@ -95,7 +95,9 @@ export default class ListComponent implements OnInit {
   }
 
   selectTag(tag: Tag | null, ev: MouseEvent): void {
-    ev && ev.preventDefault();
+    if (ev) {
+      ev.preventDefault();
+    }
     console.log(tag);
     if (tag !== null) {
       this.selectedTag = tag;

@@ -12,9 +12,9 @@ export default class Upload {
     public exif: string = ''
   ) {
     if (date !== '') {
-      let datePieces: string[] = date.split(' ');
-      let firstPieces: string[] = datePieces[0].split(':');
-      let lastPieces: string[] = datePieces[1].split(':');
+      const datePieces: string[] = date.split(' ');
+      const firstPieces: string[] = datePieces[0].split(':');
+      const lastPieces: string[] = datePieces[1].split(':');
       this.creationDate = new Date(
         parseInt(firstPieces[0]),
         parseInt(firstPieces[1]) - 1,

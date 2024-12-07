@@ -7,7 +7,7 @@ export default class EsDateAdapter extends NativeDateAdapter {
     return num < 10 ? '0' + num : num.toString();
   }
 
-  override format(date: Date, displayFormat: Object): string {
+  override format(date: Date, displayFormat: object): string {
     const year: number = date.getFullYear();
     const month: string = this.formatZeroNumber(date.getMonth() + 1);
     const day: string = this.formatZeroNumber(date.getDate());
