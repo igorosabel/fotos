@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,15 +43,15 @@ export default class ListComponent implements OnInit {
   private cms: ClassMapperService = inject(ClassMapperService);
   private router: Router = inject(Router);
 
-  sideNavOpened: boolean = false;
-  isAdmin: boolean = false;
+  sideNavOpened: WritableSignal<boolean> = signal<boolean>(false);
+  isAdmin: WritableSignal<boolean> = signal<boolean>(false);
   currentPage: number = 1;
   numPages: number = 0;
-  list: Photo[] = [];
-  fullList: Photo[] = [];
-  tags: Tag[] = [];
-  selectedTag: Tag = new Tag();
-  showPhoto: boolean = false;
+  list: WritableSignal<Photo[]> = signal<Photo[]>([]);
+  fullList: WritableSignal<Photo[]> = signal<Photo[]>([]);
+  tags: WritableSignal<Tag[]> = signal<Tag[]>([]);
+  selectedTag: WritableSignal<Tag> = signal<Tag>(new Tag());
+  showPhoto: WritableSignal<boolean> = signal<boolean>(false);
   selectedPhoto: Photo = new Photo();
 
   ngOnInit(): void {
@@ -53,33 +59,33 @@ export default class ListComponent implements OnInit {
     if (!this.us.logged) {
       this.router.navigate(['/login']);
     } else {
-      this.isAdmin = this.us.user.isAdmin;
+      this.isAdmin.set(this.us.user.isAdmin);
 
       this.as
         .getPhotos(this.currentPage)
         .subscribe((result: PhotosResult): void => {
           this.numPages = result.pages;
-          this.fullList = this.cms.getPhotos(result.list);
+          this.fullList.set(this.cms.getPhotos(result.list));
           this.filterPhotos();
         });
 
       this.as.getTags().subscribe((result: TagsResult): void => {
-        this.tags = this.cms.getTags(result.list);
+        this.tags.set(this.cms.getTags(result.list));
       });
     }
   }
 
   openSideNav(): void {
-    this.sideNavOpened = true;
+    this.sideNavOpened.set(true);
   }
 
   selectPhoto(photo: Photo): void {
     this.selectedPhoto = photo;
-    this.showPhoto = true;
+    this.showPhoto.set(true);
   }
 
   closePhoto(): void {
-    this.showPhoto = false;
+    this.showPhoto.set(false);
   }
 
   previousPhoto(ev: any): void {
@@ -100,29 +106,32 @@ export default class ListComponent implements OnInit {
     }
     console.log(tag);
     if (tag !== null) {
-      this.selectedTag = tag;
+      this.selectedTag.set(tag);
     } else {
-      this.selectedTag = new Tag();
+      this.selectedTag.set(new Tag());
     }
     this.filterPhotos();
-    this.sideNavOpened = false;
+    this.sideNavOpened.set(false);
   }
 
   filterPhotos(): void {
-    if (this.selectedTag.id == -1) {
-      this.list = this.cms.getPhotos(
-        this.fullList.map((x: Photo): PhotoInterface => x.toInterface())
+    if (this.selectedTag().id == -1) {
+      this.list.set(
+        this.cms.getPhotos(
+          this.fullList().map((x: Photo): PhotoInterface => x.toInterface())
+        )
       );
     } else {
-      this.list = [];
-      for (const p of this.fullList) {
+      const list: Photo[] = [];
+      for (const p of this.fullList()) {
         for (const t of p.tags) {
-          if (t.id == this.selectedTag.id) {
-            this.list.push(this.cms.getPhoto(p.toInterface()));
+          if (t.id == this.selectedTag().id) {
+            list.push(this.cms.getPhoto(p.toInterface()));
             break;
           }
         }
       }
+      this.list.set(list);
     }
   }
 

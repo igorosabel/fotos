@@ -12,7 +12,7 @@
 </mat-toolbar>
 
 <table mat-table
-	   [dataSource]="users">
+	   [dataSource]="users()">
 	<ng-container matColumnDef="id">
 		<th mat-header-cell
 			*matHeaderCellDef>Id</th>
@@ -57,7 +57,7 @@
 			</button>
 			<button mat-icon-button
 					color="primary"
-					[disabled]="element.id===idUser">
+					[disabled]="element.id === idUser">
 				<mat-icon>delete_forever</mat-icon>
 			</button>
 		</td>
@@ -69,45 +69,45 @@
 		*matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-@if (showOverlay) {
+@if (showOverlay()) {
 <div class="overlay">
 	<mat-card>
-		<mat-card-header>{{windowTitle}}</mat-card-header>
+		<mat-card-header>{{ windowTitle() }}</mat-card-header>
 		<mat-card-content class="form-content">
 			<mat-form-field>
 				<mat-label>Nombre de usuario</mat-label>
 				<input matInput
 					   [(ngModel)]="selectedUser.username"
-					   [disabled]="savingUser">
+					   [disabled]="savingUser()">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Nombre</mat-label>
 				<input matInput
 					   [(ngModel)]="selectedUser.name"
-					   [disabled]="savingUser">
+					   [disabled]="savingUser()">
 			</mat-form-field>
 			<mat-form-field>
 				<mat-label>Contraseña</mat-label>
 				<input matInput
 					   type="password"
 					   [(ngModel)]="selectedUser.pass"
-					   [disabled]="savingUser">
+					   [disabled]="savingUser()">
 			</mat-form-field>
 			<div class="form-row">
 				<label>Administrador</label>
 				<mat-slide-toggle color="primary"
 								  [(ngModel)]="selectedUser.isAdmin"
-								  [disabled]="savingUser"></mat-slide-toggle>
+								  [disabled]="savingUser()"></mat-slide-toggle>
 			</div>
 		</mat-card-content>
 		<mat-card-actions class="actions-end">
 			<button mat-button
 					(click)="closeOverlay()"
-					[disabled]="savingUser">Cancelar</button>
+					[disabled]="savingUser()">Cancelar</button>
 			<button mat-flat-button
 					(click)="saveUser()"
-					[disabled]="savingUser">
-				@if (!savingUser) {
+					[disabled]="savingUser()">
+				@if (!savingUser()) {
 				<span>Continuar</span>
 				}
 				@else {

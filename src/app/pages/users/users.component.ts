@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -9,7 +15,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
-import { UserUpdateInterface } from '@interfaces/interfaces';
+import { UserResult, UserUpdateInterface } from '@interfaces/interfaces';
 import User from '@model/user.model';
 import ApiService from '@services/api.service';
 import ClassMapperService from '@services/class-mapper.service';
@@ -39,9 +45,9 @@ export default class UsersComponent implements OnInit {
   private router: Router = inject(Router);
 
   idUser: number = -1;
-  users: User[] = [];
+  users: WritableSignal<User[]> = signal<User[]>([]);
   displayedColumns: string[] = ['id', 'username', 'name', 'isAdmin', 'options'];
-  windowTitle: string = 'Nuevo usuario';
+  windowTitle: WritableSignal<string> = signal<string>('Nuevo usuario');
   selectedUser: UserUpdateInterface = {
     id: -1,
     username: '',
@@ -49,8 +55,8 @@ export default class UsersComponent implements OnInit {
     pass: '',
     isAdmin: false,
   };
-  showOverlay: boolean = false;
-  savingUser: boolean = false;
+  showOverlay: WritableSignal<boolean> = signal<boolean>(false);
+  savingUser: WritableSignal<boolean> = signal<boolean>(false);
 
   ngOnInit(): void {
     this.us.loadLogin();
@@ -62,19 +68,19 @@ export default class UsersComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.as.getUsers().subscribe((result) => {
-      this.users = this.cms.getUsers(result.list);
+    this.as.getUsers().subscribe((result: UserResult): void => {
+      this.users.set(this.cms.getUsers(result.list));
     });
   }
 
   editUser(user: User): void {
-    this.windowTitle = 'Nuevo usuario';
+    this.windowTitle.set('Editar usuario');
     this.selectedUser = user.toUserInterface();
-    this.showOverlay = true;
+    this.showOverlay.set(true);
   }
 
   addUser(): void {
-    this.windowTitle = 'Nuevo usuario';
+    this.windowTitle.set('Nuevo usuario');
     this.selectedUser = {
       id: -1,
       username: '',
@@ -82,17 +88,17 @@ export default class UsersComponent implements OnInit {
       pass: '',
       isAdmin: false,
     };
-    this.showOverlay = true;
+    this.showOverlay.set(true);
   }
 
   closeOverlay(): void {
-    this.showOverlay = false;
+    this.showOverlay.set(false);
   }
 
   saveUser(): void {
-    this.savingUser = true;
+    this.savingUser.set(true);
     this.as.saveUser(this.selectedUser).subscribe((result) => {
-      this.savingUser = false;
+      this.savingUser.set(false);
       if (result.status === 'ok') {
         this.closeOverlay();
         this.loadUsers();

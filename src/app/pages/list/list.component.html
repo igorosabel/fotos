@@ -11,7 +11,7 @@
 		</mat-toolbar>
 
 		<div class="images">
-			@for (photo of list; track photo.id) {
+			@for (photo of list(); track photo.id) {
 			<div class="image"
 				 (click)="selectPhoto(photo)">
 				<picture>
@@ -29,9 +29,9 @@
 	<mat-drawer #drawer
 				mode="push"
 				position="end"
-				[(opened)]="sideNavOpened">
+				[opened]="sideNavOpened()">
 		<mat-nav-list class="nav-list">
-			@if (isAdmin) {
+			@if (isAdmin()) {
 			<a mat-list-item
 			   routerLink="/add">Añadir</a>
 			<a mat-list-item
@@ -43,18 +43,18 @@
 			<a mat-list-item
 			   href="#"
 			   (click)="selectTag(null, $event)"
-			   [class]="{'selected-tag': selectedTag.id === -1}">Todas las fotos</a>
-			@for (tag of tags; track tag.id) {
+			   [class]="{'selected-tag': selectedTag().id === -1}">Todas las fotos</a>
+			@for (tag of tags(); track tag.id) {
 			<a mat-list-item
 			   href="#"
 			   (click)="selectTag(tag, $event)"
-			   [class]="{'selected-tag': selectedTag.id === tag.id}">{{tag.tag}}</a>
+			   [class]="{'selected-tag': selectedTag().id === tag.id}">{{tag.tag}}</a>
 			}
 		</mat-nav-list>
 	</mat-drawer>
 </mat-drawer-container>
 
-@if (showPhoto) {
+@if (showPhoto()) {
 <div class="photo"
 	 (click)="closePhoto()">
 	<img [src]="selectedPhoto.img"

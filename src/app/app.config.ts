@@ -1,9 +1,14 @@
-import { ApplicationConfig } from '@angular/core';
 import {
-  InMemoryScrollingFeature,
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
+import {
   InMemoryScrollingOptions,
   provideRouter,
+  withComponentInputBinding,
   withInMemoryScrolling,
+  withViewTransitions,
 } from '@angular/router';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -19,19 +24,21 @@ const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
   anchorScrolling: 'enabled',
 };
-const inMemoryScrollingFeature: InMemoryScrollingFeature =
-  withInMemoryScrolling(scrollConfig);
 const appearance: MatFormFieldDefaultOptions = {
   appearance: 'outline',
 };
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: appearance,
-    },
-    provideRouter(routes, inMemoryScrollingFeature),
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: appearance },
+    provideRouter(
+      routes,
+      withViewTransitions(),
+      withInMemoryScrolling(scrollConfig),
+      withComponentInputBinding()
+    ),
+    provideBrowserGlobalErrorListeners(),
+    provideZonelessChangeDetection(),
     provideHttpClient(withInterceptors([TokenInterceptor])),
     provideCore(),
   ],
