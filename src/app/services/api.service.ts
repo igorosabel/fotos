@@ -1,5 +1,5 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { Service, inject } from '@angular/core';
 import { environment } from '@env/environment';
 import {
   LoginData,
@@ -9,14 +9,13 @@ import {
   StatusResult,
   TagsResult,
   UploadInterface,
+  UploadResult,
   UserResult,
   UserUpdateInterface,
 } from '@interfaces/interfaces';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export default class ApiService {
   private http: HttpClient = inject(HttpClient);
   apiUrl: string = environment.apiUrl;
@@ -33,17 +32,17 @@ export default class ApiService {
     return this.http.post<TagsResult>(this.apiUrl + 'get-tags', {});
   }
 
-  upload(data: UploadInterface, id: number): Observable<any> {
+  upload(data: UploadInterface, id: number): Observable<HttpEvent<UploadResult>> {
     const req = new HttpRequest(
       'POST',
       this.apiUrl + 'upload',
       { data, id },
       {
         reportProgress: true,
-      }
+      },
     );
 
-    return this.http.request<any>(req);
+    return this.http.request<UploadResult>(req);
   }
 
   updateTags(list: number[], tags: string): Observable<StatusResult> {

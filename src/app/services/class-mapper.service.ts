@@ -1,17 +1,11 @@
-import { Injectable } from '@angular/core';
-import {
-  PhotoInterface,
-  TagInterface,
-  UserInterface,
-} from '@interfaces/interfaces';
+import { Service } from '@angular/core';
+import { PhotoInterface, TagInterface, UserInterface } from '@interfaces/interfaces';
 import Photo from '@model/photo.model';
 import Tag from '@model/tag.model';
 import User from '@model/user.model';
 import { urldecode } from '@osumi/tools';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export default class ClassMapperService {
   getPhotos(ps: PhotoInterface[]): Photo[] {
     return ps.map((p: PhotoInterface): Photo => {
@@ -40,12 +34,6 @@ export default class ClassMapperService {
   }
 
   getUser(u: UserInterface): User {
-    return new User(
-      u.id,
-      urldecode(u.username),
-      urldecode(u.name),
-      u.token,
-      u.isAdmin
-    );
+    return new User(u.id, urldecode(u.username), urldecode(u.name), u.token, u.isAdmin);
   }
 }

@@ -5,5 +5,5 @@ import DataShareService from '@services/data-share.service';
 import UserService from '@services/user.service';
 
 export default function provideCore(): Provider[] {
-  return [UserService, DataShareService, ApiService, ClassMapperService];
+  return [ApiService, ClassMapperService, DataShareService, UserService];
 }

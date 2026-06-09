@@ -59,6 +59,10 @@ export interface UploadInterface {
   exif: string;
 }
 
+export interface UploadResult extends StatusResult {
+  id: number;
+}
+
 export interface UserResult {
   status: string;
   list: UserInterface[];

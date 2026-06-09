@@ -14,7 +14,16 @@ import Upload from '@model/upload.class';
 import ApiService from '@services/api.service';
 import UserService from '@services/user.service';
 
-declare var EXIF: any;
+interface ExifTags {
+  DateTimeOriginal?: string;
+  [tag: string]: unknown;
+}
+
+interface ExifStatic {
+  readFromBinaryFile(file: ArrayBufferLike): ExifTags;
+}
+
+declare const EXIF: ExifStatic;
 
 @Component({
   selector: 'app-add',
@@ -65,8 +74,8 @@ export default class AddComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     if (target !== null && target.files !== null && target.files.length > 0) {
       const files: FileList = target.files;
-      for (let i: number = 0; i < files.length; i++) {
-        this.readFile(files[i]);
+      for (const file of Array.from(files)) {
+        this.readFile(file);
       }
     }
   }
@@ -86,9 +95,7 @@ export default class AddComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const exif = EXIF.readFromBinaryFile(
-        this.base64ToArrayBuffer(reader.result as string)
-      );
+      const exif = EXIF.readFromBinaryFile(this.base64ToArrayBuffer(reader.result as string));
       //alert(JSON.stringify(exif));
       //console.log(exif);
       const result = reader.result as string;
@@ -96,8 +103,8 @@ export default class AddComponent implements OnInit {
         new Upload(
           result,
           exif.DateTimeOriginal ? exif.DateTimeOriginal : '',
-          JSON.stringify(exif)
-        )
+          JSON.stringify(exif),
+        ),
       );
       //console.log(this.list);
       //alert(JSON.stringify(this.list.map(x => x.toInterface())));
@@ -128,11 +135,13 @@ export default class AddComponent implements OnInit {
       .upload(this.list[this.currentUploading].toInterface(), this.us.user.id)
       .subscribe((event) => {
         if (event.type === HttpEventType.UploadProgress) {
-          this.list[this.currentUploading].uploaded = this.calculateUploadWidth(
-            Math.round((100 * event.loaded) / event.total)
-          );
+          if (event.total) {
+            this.list[this.currentUploading].uploaded = this.calculateUploadWidth(
+              Math.round((100 * event.loaded) / event.total),
+            );
+          }
         } else if (event instanceof HttpResponse) {
-          if (event.body.status === 'ok') {
+          if (event.body?.status === 'ok') {
             // Añado id de la foto añadida a la lista
             this.uploaded.push(event.body.id);
             // Marco la foto como subida

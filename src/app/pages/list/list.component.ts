@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,11 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
-import {
-  PhotoInterface,
-  PhotosResult,
-  TagsResult,
-} from '@interfaces/interfaces';
+import { PhotoInterface, PhotosResult, TagsResult } from '@interfaces/interfaces';
 import Photo from '@model/photo.model';
 import Tag from '@model/tag.model';
 import ApiService from '@services/api.service';
@@ -53,6 +43,8 @@ export default class ListComponent implements OnInit {
   selectedTag: WritableSignal<Tag> = signal<Tag>(new Tag());
   showPhoto: WritableSignal<boolean> = signal<boolean>(false);
   selectedPhoto: Photo = new Photo();
+  private readonly swipeThreshold: number = 50;
+  private photoSwipeStartX: number | null = null;
 
   ngOnInit(): void {
     this.us.loadLogin();
@@ -61,13 +53,11 @@ export default class ListComponent implements OnInit {
     } else {
       this.isAdmin.set(this.us.user.isAdmin);
 
-      this.as
-        .getPhotos(this.currentPage)
-        .subscribe((result: PhotosResult): void => {
-          this.numPages = result.pages;
-          this.fullList.set(this.cms.getPhotos(result.list));
-          this.filterPhotos();
-        });
+      this.as.getPhotos(this.currentPage).subscribe((result: PhotosResult): void => {
+        this.numPages = result.pages;
+        this.fullList.set(this.cms.getPhotos(result.list));
+        this.filterPhotos();
+      });
 
       this.as.getTags().subscribe((result: TagsResult): void => {
         this.tags.set(this.cms.getTags(result.list));
@@ -88,16 +78,47 @@ export default class ListComponent implements OnInit {
     this.showPhoto.set(false);
   }
 
-  previousPhoto(ev: any): void {
-    console.log(ev);
-    console.log(typeof ev);
-    alert(typeof ev);
+  onPhotoPointerDown(ev: PointerEvent): void {
+    this.photoSwipeStartX = ev.clientX;
   }
 
-  nextPhoto(ev: any): void {
-    console.log(ev);
-    console.log(typeof ev);
-    alert(typeof ev);
+  onPhotoPointerUp(ev: PointerEvent): void {
+    if (this.photoSwipeStartX === null) {
+      return;
+    }
+
+    const swipeDistance = ev.clientX - this.photoSwipeStartX;
+    this.photoSwipeStartX = null;
+
+    if (Math.abs(swipeDistance) < this.swipeThreshold) {
+      return;
+    }
+
+    ev.stopPropagation();
+    if (swipeDistance > 0) {
+      this.previousPhoto();
+    } else {
+      this.nextPhoto();
+    }
+  }
+
+  previousPhoto(): void {
+    this.selectPhotoByOffset(-1);
+  }
+
+  nextPhoto(): void {
+    this.selectPhotoByOffset(1);
+  }
+
+  private selectPhotoByOffset(offset: number): void {
+    const photos = this.list();
+    if (photos.length === 0) {
+      return;
+    }
+
+    const currentIndex = photos.findIndex((photo: Photo): boolean => photo.id === this.selectedPhoto.id);
+    const nextIndex = currentIndex === -1 ? 0 : (currentIndex + offset + photos.length) % photos.length;
+    this.selectedPhoto = photos[nextIndex];
   }
 
   selectTag(tag: Tag | null, ev: MouseEvent): void {
@@ -117,9 +138,7 @@ export default class ListComponent implements OnInit {
   filterPhotos(): void {
     if (this.selectedTag().id == -1) {
       this.list.set(
-        this.cms.getPhotos(
-          this.fullList().map((x: Photo): PhotoInterface => x.toInterface())
-        )
+        this.cms.getPhotos(this.fullList().map((x: Photo): PhotoInterface => x.toInterface())),
       );
     } else {
       const list: Photo[] = [];

@@ -58,8 +58,9 @@
 <div class="photo"
 	 (click)="closePhoto()">
 	<img [src]="selectedPhoto.img"
-		 (swipeleft)="previousPhoto($event)"
-		 (swiperight)="nextPhoto($event)"
+		 (click)="$event.stopPropagation()"
+		 (pointerdown)="onPhotoPointerDown($event)"
+		 (pointerup)="onPhotoPointerUp($event)"
 		 alt="">
 	<div class="photo-date">{{selectedPhoto.showDate}}</div>
 	<div class="photo-tags">
